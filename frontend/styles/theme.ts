@@ -1,12 +1,13 @@
 interface BaseTheme {
   colors: Readonly<Record<string, string>>;
   space: Readonly<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', string>>;
+  breakpoint: Readonly<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', string>>;
 }
 
 const defaultTheme: BaseTheme = {
   colors: {
-    white: '#fff',
-    black: '#000',
+    white: '#ffffff',
+    black: '#000000',
   },
   space: {
     xl: '30px',
@@ -14,6 +15,13 @@ const defaultTheme: BaseTheme = {
     md: '16px',
     sm: '8px',
     xs: '4px',
+  },
+  breakpoint: {
+    xl: '1920px',
+    lg: '1440px',
+    md: '720px',
+    sm: '480px',
+    xs: '320px',
   },
 };
 
@@ -23,6 +31,7 @@ const lightTheme: BaseTheme = {
     background: '#f9f9f9',
   },
   space: defaultTheme.space,
+  breakpoint: defaultTheme.breakpoint,
 };
 
 const darkTheme: BaseTheme = {
@@ -31,6 +40,7 @@ const darkTheme: BaseTheme = {
     background: '#181818',
   },
   space: defaultTheme.space,
+  breakpoint: defaultTheme.breakpoint,
 };
 
 export default {

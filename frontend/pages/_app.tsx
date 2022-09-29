@@ -1,15 +1,22 @@
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import theme from '@styles/theme';
 import GlobalStyle from '@styles/GlobalStyle';
+import { wrapper } from '@store/index';
+import { Provider } from 'react-redux';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const Application = ({ Component, ...rest }: AppProps) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
+
   return (
-    <ThemeProvider theme={theme.light}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme.light}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </Provider>
   );
-}
+};
 
-export default MyApp;
+export default Application;

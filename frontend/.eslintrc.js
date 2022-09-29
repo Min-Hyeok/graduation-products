@@ -34,7 +34,9 @@ module.exports = {
     semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     'react/react-in-jsx-scope': 'off',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'no-param-reassign': 'off',
   },
 };
