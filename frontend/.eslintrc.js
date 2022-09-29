@@ -1,41 +1,40 @@
-// eslint-disable-next-line no-undef
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2021': true
+  env: {
+    browser: true,
+    es2021: true
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/jsx-runtime'
+    'plugin:react/jsx-runtime',
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript'
   ],
-  'overrides': [],
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
-    'ecmaVersion': 'latest',
-    'sourceType': 'module'
+  overrides: [],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json'],
+    createDefaultProgram: true
   },
-  'plugins': [
-    'react',
-    '@typescript-eslint'
-  ],
-  'rules': {
-    'indent': [
-      'error',
-      2
-    ],
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
+  rules: {
+    indent: ['error', 2],
     'linebreak-style': [
       'error',
       'windows'
     ],
-    'quotes': [
+    quotes: [
       'error',
       'single'
     ],
-    'semi': [
-      'error',
-      'always'
-    ]
+    semi: ['error', 'always'],
+    'comma-dangle': ['error', 'never'],
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts'] }],
+    'react/jsx-props-no-spreading': 'off'
   }
 };
