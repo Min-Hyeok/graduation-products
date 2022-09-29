@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
   extends: [
     'eslint:recommended',
@@ -10,7 +10,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'airbnb',
     'airbnb/hooks',
-    'airbnb-typescript'
+    'airbnb-typescript',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -18,23 +18,23 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: ['./tsconfig.json'],
-    createDefaultProgram: true
+    createDefaultProgram: true,
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
     indent: ['error', 2],
     'linebreak-style': [
       'error',
-      'windows'
+      'windows',
     ],
     quotes: [
       'error',
-      'single'
+      'single',
     ],
     semi: ['error', 'always'],
-    'comma-dangle': ['error', 'never'],
+    'comma-dangle': ['error', 'always-multiline'],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts'] }],
-    'react/jsx-props-no-spreading': 'off'
-  }
+    'react/jsx-props-no-spreading': 'off',
+  },
 };

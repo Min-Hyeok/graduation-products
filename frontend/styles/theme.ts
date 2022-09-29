@@ -6,34 +6,34 @@ interface BaseTheme {
 const defaultTheme: BaseTheme = {
   colors: {
     white: '#fff',
-    black: '#000'
+    black: '#000',
   },
   space: {
     xl: '30px',
     lg: '20px',
     md: '16px',
     sm: '8px',
-    xs: '4px'
-  }
+    xs: '4px',
+  },
 };
 
 const lightTheme: BaseTheme = {
   colors: {
     ...defaultTheme.colors,
-    background: '#f9f9f9'
+    background: '#f9f9f9',
   },
-  space: defaultTheme.space
+  space: defaultTheme.space,
 };
 
 const darkTheme: BaseTheme = {
   colors: {
     ...defaultTheme.colors,
-    background: '#181818'
+    background: '#181818',
   },
-  space: defaultTheme.space
+  space: defaultTheme.space,
 };
 
 export default {
   light: lightTheme,
-  dark: darkTheme
+  dark: darkTheme,
 };
