@@ -1,8 +1,4 @@
-interface BaseTheme {
-  colors: Readonly<Record<string, string>>;
-  space: Readonly<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', string>>;
-  breakpoint: Readonly<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', string>>;
-}
+import { BaseTheme } from 'styled-components';
 
 const defaultTheme: BaseTheme = {
   colors: {
