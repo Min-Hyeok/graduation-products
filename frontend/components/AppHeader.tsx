@@ -12,12 +12,13 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  width: 1760px;
+  max-width: 1760px;
   height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 ${({ theme }) => theme.space.lg};
 `;
 
 const Logo = styled.div`
