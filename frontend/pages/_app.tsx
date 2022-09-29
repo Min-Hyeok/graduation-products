@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import theme from '@styles/theme';
 import { setTheme } from '@store/modules/settingSlice';
 import { useEffect } from 'react';
+import AppHeader from '@components/AppHeader';
 
 const Application = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -27,6 +28,7 @@ const Application = ({ Component, ...rest }: AppProps) => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme[state.setting.theme]}>
+        <AppHeader />
         <GlobalStyle />
         <Component {...pageProps} />
       </ThemeProvider>

@@ -1,4 +1,7 @@
-const nextConfig = {
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withImages = require('next-images');
+
+const nextConfig = withImages({
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
@@ -6,6 +9,9 @@ const nextConfig = {
       ssr: true,
     },
   },
-};
+  images: {
+    disableStaticImages: true,
+  },
+});
 
 module.exports = nextConfig;
