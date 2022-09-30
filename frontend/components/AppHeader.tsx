@@ -2,13 +2,17 @@ import styled from 'styled-components';
 import PageLogo from '@assets/images/logo.png';
 import Link from 'next/link';
 import TextField from '@components/TextField';
-import { BiSearch } from 'react-icons/bi';
+import useInput from '@hooks/useInput';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { TbUserCircle } from 'react-icons/tb';
+import { useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 const Wrapper = styled.div`
   position: fixed;
   width: 100%;
   height: 80px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
+  box-shadow: var(--shadow-color);
   background-color: var(--header-color);
   transition: background 0.3s ease-out;
 `;
@@ -35,7 +39,7 @@ const Logo = styled.div`
 
   > img {
     max-width: 55px;
-    padding-right: ${({ theme }) => theme.space.md};
+    padding-right: 16px;
   }
 `;
 
@@ -45,24 +49,97 @@ const SearchArea = styled.div`
 `;
 
 const UserInfo = styled.div`
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-color);
+  padding: 5px 10px;
+  cursor: pointer;
+  position: relative;
 
+  > svg {
+    :nth-of-type(1) {
+      font-size: 18px;
+    }
+
+    :nth-of-type(2) {
+      font-size: 34px;
+      margin-left: 10px;
+    }
+  }
+
+  > div {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(120%);
+    width: 180px;
+    background-color: var(--white-color);
+    padding: 5px 0;
+    margin: 5px 0;
+    border-radius: 15px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    box-sizing: border-box;
+
+    > div {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      transition: background 0.5s;
+      padding: 0 20px;
+      font-size: 15px;
+
+      &.bold {
+        font-weight: bold;
+      }
+
+      :hover {
+        background-color: var(--gray-color);
+      }
+    }
+  }
 `;
 
-const AppHeader = () => (
-  <Wrapper>
-    <Header>
-      <Link href="/">
-        <Logo>
-          <img src={PageLogo} alt="" />
-          개냥이
-        </Logo>
-      </Link>
-      <SearchArea>
-        <TextField icon={<BiSearch />} />
-      </SearchArea>
-      <UserInfo>로그인/로그아웃</UserInfo>
-    </Header>
-  </Wrapper>
-);
+const AppHeader = () => {
+  const menuRef = useRef(null);
+  const searchText = useInput('');
+  const [showMenu, setShowMenu] = useState(false);
+  const showUserMenu = () => {
+    setShowMenu(true);
+  };
+
+  const hideUserMenu = () => {
+    setShowMenu(false);
+  };
+
+  useOnClickOutside(menuRef, hideUserMenu);
+
+  return (
+    <Wrapper>
+      <Header>
+        <Link href="/">
+          <Logo>
+            <img src={PageLogo} alt="" />
+            개냥이
+          </Logo>
+        </Link>
+        <SearchArea>
+          <TextField {...searchText} search />
+        </SearchArea>
+        <UserInfo ref={menuRef} onClick={showUserMenu}>
+          <GiHamburgerMenu />
+          <TbUserCircle />
+          {showMenu && (
+            <div>
+              <div className="bold">회원가입</div>
+              <div>로그인</div>
+            </div>
+          )}
+        </UserInfo>
+      </Header>
+    </Wrapper>
+  );
+};
 
 export default AppHeader;

@@ -28,6 +28,8 @@ const lightTheme: BaseTheme = {
     background: '#f9f9f9',
     font: '#030303',
     header: 'rgba(255, 255, 255, 0.98)',
+    shadow: 'rgba(0, 0, 0, 0.02) 0 1px 3px 0, rgba(27, 31, 35, 0.15) 0 0 0 1px',
+    gray: '#f7f7f7',
   },
   space: defaultTheme.space,
   breakpoint: defaultTheme.breakpoint,
