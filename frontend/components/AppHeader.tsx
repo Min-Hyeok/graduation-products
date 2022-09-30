@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import PageLogo from '@assets/images/logo.png';
 import Link from 'next/link';
+import TextField from '@components/TextField';
+import { BiSearch } from 'react-icons/bi';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -18,7 +20,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 ${({ theme }) => theme.space.lg};
+  padding: 0 var(--lg-space);
 `;
 
 const Logo = styled.div`
@@ -29,6 +31,7 @@ const Logo = styled.div`
   cursor: pointer;
   user-select: none;
   -webkit-user-drag: none;
+  color: var(--primary-color);
 
   > img {
     max-width: 55px;
@@ -55,7 +58,7 @@ const AppHeader = () => (
         </Logo>
       </Link>
       <SearchArea>
-        <input type="text" name="search" />
+        <TextField icon={<BiSearch />} />
       </SearchArea>
       <UserInfo>로그인/로그아웃</UserInfo>
     </Header>

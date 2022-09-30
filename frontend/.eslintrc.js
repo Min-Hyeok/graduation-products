@@ -38,5 +38,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'no-param-reassign': 'off',
+    'react/require-default-props': 'off',
   },
 };

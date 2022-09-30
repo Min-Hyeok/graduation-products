@@ -14,11 +14,19 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  input {
+    outline: none;
+  }
+
   :root {
     ${({ theme }: { theme: BaseTheme }) => `
-      --background-color: ${theme.colors.background};
-      --font-color: ${theme.colors.fontColor};
-      --header-color: ${theme.colors.headerColor};
+      --xl-space: ${theme.space.xl};
+      --lg-space: ${theme.space.lg};
+      --md-space: ${theme.space.md};
+      --sm-space: ${theme.space.sm};
+      --xl-space: ${theme.space.xl};
+
+      ${Object.keys(theme.colors).map((key) => `--${key}-color: ${theme.colors[key]};`).join('')}
    `};
   }
 

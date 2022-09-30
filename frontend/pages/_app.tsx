@@ -18,7 +18,8 @@ const Application = ({ Component, ...rest }: AppProps) => {
       '(prefers-color-scheme: dark)',
     ).matches;
 
-    if (isDarkMode) store.dispatch(setTheme('dark'));
+    // 다크모드는 나중에 시간나면 하는걸로
+    if (isDarkMode) store.dispatch(setTheme('light'));
   };
 
   useEffect(() => {

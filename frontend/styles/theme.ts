@@ -4,6 +4,7 @@ const defaultTheme: BaseTheme = {
   colors: {
     white: '#ffffff',
     black: '#000000',
+    primary: '#0d47a1',
   },
   space: {
     xl: '32px',
@@ -25,8 +26,8 @@ const lightTheme: BaseTheme = {
   colors: {
     ...defaultTheme.colors,
     background: '#f9f9f9',
-    fontColor: '#030303',
-    headerColor: 'rgba(255, 255, 255, 0.98)',
+    font: '#030303',
+    header: 'rgba(255, 255, 255, 0.98)',
   },
   space: defaultTheme.space,
   breakpoint: defaultTheme.breakpoint,
@@ -36,8 +37,8 @@ const darkTheme: BaseTheme = {
   colors: {
     ...defaultTheme.colors,
     background: '#181818',
-    fontColor: '#ffffff',
-    headerColor: '#202020',
+    font: '#ffffff',
+    header: '#202020',
   },
   space: defaultTheme.space,
   breakpoint: defaultTheme.breakpoint,
