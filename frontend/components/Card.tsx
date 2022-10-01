@@ -108,7 +108,7 @@ const SlideDots = styled.div`
   border-bottom-right-radius: 10px;
 
   > div {
-    width: 30%;
+    width: 65px;
     margin: 0 auto;
     transform: translateY(25px);
     overflow: hidden;
@@ -167,9 +167,17 @@ interface CardType {
   loading: boolean;
 }
 
-const Card = ({ item, loading }: CardType) => {
+const Card = ({
+  item,
+  loading,
+}: CardType) => {
   const {
-    images, title, varieties, age, price, index,
+    images,
+    title,
+    varieties,
+    age,
+    price,
+    index,
   }: AnimalList = item;
   const [priceText, setPriceText] = useState('');
   const [ageText, setAgeText] = useState('');
@@ -184,7 +192,8 @@ const Card = ({ item, loading }: CardType) => {
   };
 
   useEffect(() => {
-    setPriceText(`${price ? `${Intl.NumberFormat('ko-KR').format(price)}원` : '무료'}`);
+    setPriceText(`${price ? `${Intl.NumberFormat('ko-KR')
+      .format(price)}원` : '무료'}`);
 
     if (varieties && age) {
       setAgeText(`${varieties} / ${age}살`);
@@ -230,7 +239,7 @@ const Card = ({ item, loading }: CardType) => {
           <SlideDots>
             <div>
               <div style={{
-                transform: `translateX(-${(slide - 3) * 13}px)`,
+                transform: `translateX(-${(slide - 2) * 13}px)`,
               }}
               >
                 {images.map((src, dotsIndex) => (
