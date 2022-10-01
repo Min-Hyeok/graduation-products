@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {
-  ChangeEvent, InputHTMLAttributes, useEffect, useRef, useState,
+  ChangeEvent, InputHTMLAttributes, useRef, useState,
 } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -57,13 +57,14 @@ const IconArea = styled.div`
 `;
 
 interface TextFieldType extends InputHTMLAttributes<HTMLInputElement> {
+  reset?: () => void;
   onFocus?: () => void;
   onBlur?: () => void;
   search?: boolean;
 }
 
 const TextField = ({
-  value, onChange, search, ...props
+  value, onChange, reset, search, ...props
 }: TextFieldType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showClear, setShowClear] = useState(false);
@@ -79,14 +80,9 @@ const TextField = ({
   };
 
   const clearInput = () => {
+    reset?.();
     setShowClear(false);
   };
-
-  useEffect(() => {
-    if (inputRef.current && !showClear) {
-      inputRef.current.value = '';
-    }
-  }, [showClear]);
 
   return (
     <Wrapper>

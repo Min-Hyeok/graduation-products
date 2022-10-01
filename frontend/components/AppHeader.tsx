@@ -57,6 +57,7 @@ const UserInfo = styled.div`
   box-shadow: var(--shadow-color);
   padding: 5px 10px;
   cursor: pointer;
+  position: relative;
 
   > svg {
     :nth-of-type(1) {
