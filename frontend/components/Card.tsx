@@ -4,14 +4,11 @@ import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: var(--white-color);
-  border-radius: 15px;
-  overflow: hidden;
-  position: relative;
   z-index: 0;
 `;
 
@@ -19,6 +16,8 @@ const ImageSlide = styled.div`
   position: relative;
   margin-bottom: 10px;
   width: 100%;
+  height: 280px;
+  overflow: hidden;
 
   :hover {
     > div:nth-child(1) {
@@ -38,17 +37,26 @@ const ImageSlide = styled.div`
       transform: translateY(-50%);
       display: flex;
       justify-content: space-between;
-      padding: 0 5px;
       box-sizing: border-box;
       z-index: 1;
 
       > button {
+        position: absolute;
         width: 30px;
         height: 30px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.8);
         cursor: pointer;
         opacity: 0;
+        top: 0;
+
+        &.left {
+          left: 10px;
+        }
+
+        &.right {
+          right: 10px;
+        }
 
         > svg {
           font-size: 22px;
@@ -57,21 +65,74 @@ const ImageSlide = styled.div`
     }
 
     :nth-child(2) {
-      display: flex;
       width: 100%;
-      height: 280px;
-      overflow: hidden;
+      height: 100%;
       position: relative;
       z-index: 0;
+      border-radius: 10px;
+      overflow: hidden;
 
-      > img {
-        object-fit: cover;
+      > div {
+        transition: transform 0.5s;
         width: 100%;
         height: 100%;
+        display: flex;
+
+        > img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+    }
+  }
+`;
+
+const SlideDots = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  text-align: center;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  > div {
+    width: 30%;
+    margin: 0 auto;
+    transform: translateY(10px);
+    overflow: hidden;
+
+    > div {
+      display: flex;
+      transition: transform 0.3s;
+
+      > span {
+        display: inline-block;
+        min-width: 8px;
+        min-height: 8px;
+        border-radius: 50%;
+        background: var(--gray-color);
+        opacity: 0.5;
+        transform: scale(0.7);
+        transition: transform 0.3s;
+
+        &.active {
+          background: var(--white-color);
+          opacity: 1;
+          transform: scale(1);
+        }
+
+        :not(:first-child) {
+          margin-left: 5px;
+        }
       }
     }
   }
-
 `;
 
 const Info = styled.div`
@@ -101,6 +162,15 @@ const Card = ({ item, loading }: CardType) => {
   }: AnimalList = item;
   const [priceText, setPriceText] = useState('');
   const [ageText, setAgeText] = useState('');
+  const [slide, setSlide] = useState(0);
+
+  const nextSlide = () => {
+    setSlide(slide + 1);
+  };
+
+  const prevSlide = () => {
+    setSlide(slide - 1);
+  };
 
   useEffect(() => {
     setPriceText(`${price ? `${Intl.NumberFormat('ko-KR').format(price)}원` : '무료'}`);
@@ -114,12 +184,16 @@ const Card = ({ item, loading }: CardType) => {
     <Wrapper key={index}>
       <ImageSlide>
         <div>
-          <button type="button">
-            <BsArrowLeftShort />
-          </button>
-          <button type="button">
-            <BsArrowRightShort />
-          </button>
+          {slide > 0 && (
+            <button type="button" onClick={prevSlide} className="left">
+              <BsArrowLeftShort />
+            </button>
+          )}
+          {slide < images.length - 1 && (
+            <button type="button" onClick={nextSlide} className="right">
+              <BsArrowRightShort />
+            </button>
+          )}
         </div>
         <div>
           {loading && (
@@ -130,10 +204,29 @@ const Card = ({ item, loading }: CardType) => {
             }}
             />
           )}
-          {images.map((src, imagesIndex) => (
-            <img src={src} alt="" key={imagesIndex} />
-          ))}
+          <div style={{
+            transform: `translateX(-${slide * 100}%)`,
+          }}
+          >
+            {images.map((src, imagesIndex) => (
+              <img src={src} alt="" key={imagesIndex} />
+            ))}
+          </div>
         </div>
+        {!loading && (
+          <SlideDots>
+            <div>
+              <div style={{
+                transform: `translateX(-${(slide - 3) * 13}px)`,
+              }}
+              >
+                {images.map((src, dotsIndex) => (
+                  <span className={slide === dotsIndex ? 'active' : ''} key={dotsIndex} />
+                ))}
+              </div>
+            </div>
+          </SlideDots>
+        )}
       </ImageSlide>
       <Info>
         <h2>{loading ? <Skeleton /> : title}</h2>

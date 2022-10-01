@@ -5,6 +5,7 @@ const defaultTheme: BaseTheme = {
     white: '#ffffff',
     black: '#000000',
     primary: '#0d47a1',
+    gray: '#ccc9c6',
   },
   space: {
     xl: '32px',

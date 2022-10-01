@@ -48,6 +48,8 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--background-color);
     color: var(--font-color);
     transition: background 0.3s ease-out;
+    font-family: 'NotoSansKR', sans-serif;
+    font-weight: 300;
   }
 `;
 

@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 const useFakeAnimalList = () => {
   const animalList: Array<AnimalList> = [];
   const getMultipleAnimalImage = (): Array<string> => {
-    const loop = 4;
+    const loop = 12;
     const tmpAnimalArray = [];
 
     for (let i = 0; i < loop; i += 1) {
