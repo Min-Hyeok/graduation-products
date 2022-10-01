@@ -20,7 +20,7 @@ const useFakeAnimalList = () => {
       title: '고양이 분양합니다',
       varieties: faker.animal.cat(),
       age: Number((Math.random() * 10 + 1).toFixed(0)),
-      price: Number((Math.random() * 100).toFixed(0)),
+      price: Number((Math.random() * 1000000).toFixed(0)),
     });
   }
 

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,6 +22,7 @@ const ImageSlide = styled.div`
   :hover {
     button {
       opacity: 1;
+      transition: opacity 0.3s;
     }
   }
 
@@ -42,7 +44,6 @@ const ImageSlide = styled.div`
       background-color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       opacity: 0;
-      transition: opacity 0.3s;
 
       > svg {
         font-size: 22px;
@@ -65,6 +66,10 @@ const Info = styled.div`
     font-size: 17px;
     margin-bottom: 5px;
   }
+
+  > p {
+    margin-bottom: 10px;
+  }
 `;
 
 interface CardType {
@@ -75,6 +80,16 @@ const Card = ({ item }: CardType) => {
   const {
     images, title, varieties, age, price,
   }: AnimalList = item;
+  const [priceText, setPriceText] = useState('');
+  const [ageText, setAgeText] = useState('');
+
+  useEffect(() => {
+    setPriceText(`${price ? `${Intl.NumberFormat('ko-KR').format(price)}원` : '무료'}`);
+
+    if (varieties && age) {
+      setAgeText(`${varieties} / ${age}살`);
+    }
+  }, [age, price, varieties]);
 
   return (
     <Wrapper>
@@ -93,13 +108,8 @@ const Card = ({ item }: CardType) => {
       </ImageSlide>
       <Info>
         <h2>{title}</h2>
-        <span>
-          {varieties}
-          /
-          {age}
-          살
-        </span>
-        <p>{price ? `${price}원` : '무료'}</p>
+        <p>{ageText}</p>
+        <p>{priceText}</p>
       </Info>
     </Wrapper>
   );
