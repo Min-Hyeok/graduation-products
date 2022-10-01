@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   box-shadow: var(--shadow-color);
   background-color: var(--header-color);
   transition: background 0.3s ease-out;
+  z-index: 100;
 `;
 
 const Header = styled.div`

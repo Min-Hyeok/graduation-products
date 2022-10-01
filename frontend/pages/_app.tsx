@@ -7,6 +7,7 @@ import theme from '@styles/theme';
 import { setTheme } from '@store/modules/settingSlice';
 import { useEffect } from 'react';
 import AppHeader from '@components/AppHeader';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Wrapper = styled.div`
   padding-top: var(--header-height);
