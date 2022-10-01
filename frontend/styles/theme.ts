@@ -15,10 +15,10 @@ const defaultTheme: BaseTheme = {
   },
   breakpoint: {
     xl: '1920px',
-    lg: '1440px',
-    md: '720px',
-    sm: '480px',
-    xs: '320px',
+    lg: '1600px',
+    md: '1024px',
+    sm: '720px',
+    xs: '480px',
   },
 };
 

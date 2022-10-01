@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.5.0",
     "@reduxjs/toolkit": "^1.8.5",
     "eslint": "8.22.0",
     "eslint-config-airbnb": "^19.0.4",

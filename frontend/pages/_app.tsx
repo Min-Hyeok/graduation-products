@@ -1,5 +1,5 @@
 import { AppProps } from 'next/app';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from '@styles/GlobalStyle';
 import { wrapper } from '@store/index';
 import { Provider } from 'react-redux';
@@ -7,6 +7,10 @@ import theme from '@styles/theme';
 import { setTheme } from '@store/modules/settingSlice';
 import { useEffect } from 'react';
 import AppHeader from '@components/AppHeader';
+
+const Wrapper = styled.div`
+  padding-top: var(--header-height);
+`;
 
 const Application = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -31,7 +35,9 @@ const Application = ({ Component, ...rest }: AppProps) => {
       <ThemeProvider theme={theme[state.setting.theme]}>
         <AppHeader />
         <GlobalStyle />
-        <Component {...pageProps} />
+        <Wrapper>
+          <Component {...pageProps} />
+        </Wrapper>
       </ThemeProvider>
     </Provider>
   );

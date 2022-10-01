@@ -14,6 +14,12 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    background-color: inherit;
+    border: inherit;
+    padding: 0;
+  }
+
   input {
     outline: none;
   }
@@ -24,7 +30,15 @@ const GlobalStyle = createGlobalStyle`
       --lg-space: ${theme.space.lg};
       --md-space: ${theme.space.md};
       --sm-space: ${theme.space.sm};
-      --xl-space: ${theme.space.xl};
+      --xs-space: ${theme.space.xs};
+
+      --xl-breakpoint: ${theme.breakpoint.xl};
+      --lg-breakpoint: ${theme.breakpoint.lg};
+      --md-breakpoint: ${theme.breakpoint.md};
+      --sm-breakpoint: ${theme.breakpoint.sm};
+      --xs-breakpoint: ${theme.breakpoint.xs};
+
+      --header-height: 80px;
 
       ${Object.keys(theme.colors).map((key) => `--${key}-color: ${theme.colors[key]};`).join('')}
    `};

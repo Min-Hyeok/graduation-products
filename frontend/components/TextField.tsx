@@ -1,6 +1,9 @@
 import styled from 'styled-components';
-import { InputHTMLAttributes, ReactElement, useRef } from 'react';
+import {
+  ChangeEvent, InputHTMLAttributes, useEffect, useRef, useState,
+} from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +21,7 @@ const InputWrapper = styled.div`
     background-color: var(--white-color);
   }
 
-  > div {
+  > button {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -56,14 +59,34 @@ const IconArea = styled.div`
 interface TextFieldType extends InputHTMLAttributes<HTMLInputElement> {
   onFocus?: () => void;
   onBlur?: () => void;
-  icon?: ReactElement;
   search?: boolean;
 }
 
 const TextField = ({
-  value, onChange, icon, search, ...props
+  value, onChange, search, ...props
 }: TextFieldType) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showClear, setShowClear] = useState(false);
+
+  const customOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e);
+
+    if (!inputRef?.current?.value.length) {
+      setShowClear(false);
+    } else {
+      setShowClear(true);
+    }
+  };
+
+  const clearInput = () => {
+    setShowClear(false);
+  };
+
+  useEffect(() => {
+    if (inputRef.current && !showClear) {
+      inputRef.current.value = '';
+    }
+  }, [showClear]);
 
   return (
     <Wrapper>
@@ -74,17 +97,17 @@ const TextField = ({
           name="text field"
           {...props}
           value={value}
-          onChange={onChange}
+          onChange={customOnChange}
         />
+        {showClear && (
+          <button type="button" onClick={clearInput}>
+            <AiOutlineCloseCircle />
+          </button>
+        )}
       </InputWrapper>
       {search && (
         <IconArea>
           <BiSearch />
-        </IconArea>
-      )}
-      {icon && (
-        <IconArea>
-          {icon}
         </IconArea>
       )}
     </Wrapper>

@@ -11,7 +11,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 const Wrapper = styled.div`
   position: fixed;
   width: 100%;
-  height: 80px;
+  height: var(--header-height);
   box-shadow: var(--shadow-color);
   background-color: var(--header-color);
   transition: background 0.3s ease-out;
@@ -56,7 +56,6 @@ const UserInfo = styled.div`
   box-shadow: var(--shadow-color);
   padding: 5px 10px;
   cursor: pointer;
-  position: relative;
 
   > svg {
     :nth-of-type(1) {
