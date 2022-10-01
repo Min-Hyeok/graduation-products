@@ -15,7 +15,7 @@ const InputWrapper = styled.div`
 
   > input {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 10px 30px 10px 15px;
     border: none;
     box-shadow: var(--shadow-color);
@@ -63,7 +63,11 @@ interface TextFieldType extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const TextField = ({
-  value, onChange, reset, search, ...props
+  value,
+  onChange,
+  reset,
+  search,
+  ...props
 }: TextFieldType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showClear, setShowClear] = useState(false);

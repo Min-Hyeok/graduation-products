@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     border: inherit;
     padding: 0;
     cursor: pointer;
+    color: inherit;
   }
 
   input {
@@ -44,7 +45,9 @@ const GlobalStyle = createGlobalStyle`
 
       --header-height: 80px;
 
-      ${Object.keys(theme.colors).map((key) => `--${key}-color: ${theme.colors[key]};`).join('')}
+      ${Object.keys(theme.colors)
+    .map((key) => `--${key}-color: ${theme.colors[key]};`)
+    .join('')}
    `};
   }
 

@@ -2,12 +2,14 @@ import useInput from '@hooks/useInput';
 import styled from 'styled-components';
 import Title from '@components/form/Title';
 import TextField from '@components/TextField';
+import Button from '@components/Button';
 
 const Wrapper = styled.div`
   padding: 24px;
 `;
 
 const Form = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 4fr;
   align-items: center;
@@ -23,6 +25,11 @@ const Form = styled.div`
       width: 100%;
     }
   }
+`;
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  margin-top: 15px;
 `;
 
 const SignUp = () => {
@@ -50,6 +57,9 @@ const SignUp = () => {
         <p>이메일</p>
         <TextField {...email} placeholder="이메일" />
       </Form>
+      <ButtonWrap>
+        <Button title="회원가입" />
+      </ButtonWrap>
     </Wrapper>
   );
 };
