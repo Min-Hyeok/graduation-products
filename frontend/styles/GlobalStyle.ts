@@ -1,12 +1,15 @@
 import { BaseTheme, createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import font from '@styles/font';
+import animation from '@styles/animation';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   ${font}
+  ${animation}
   * {
     transition: color 0.3s ease-out;
+    box-sizing: border-box;
   }
 
   a {
@@ -18,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: inherit;
     border: inherit;
     padding: 0;
+    cursor: pointer;
   }
 
   input {

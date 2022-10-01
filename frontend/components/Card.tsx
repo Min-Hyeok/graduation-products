@@ -10,6 +10,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   z-index: 0;
+  ${({ theme }) => `
+    @media screen and (max-width: ${theme.breakpoint.xs}) {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  `}
 `;
 
 const ImageSlide = styled.div`
@@ -92,7 +98,7 @@ const ImageSlide = styled.div`
 const SlideDots = styled.div`
   position: absolute;
   width: 100%;
-  height: 40px;
+  height: 45px;
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
@@ -104,7 +110,7 @@ const SlideDots = styled.div`
   > div {
     width: 30%;
     margin: 0 auto;
-    transform: translateY(10px);
+    transform: translateY(25px);
     overflow: hidden;
 
     > div {
@@ -116,7 +122,7 @@ const SlideDots = styled.div`
         min-width: 8px;
         min-height: 8px;
         border-radius: 50%;
-        background: var(--gray-color);
+        background: var(--white-color);
         opacity: 0.5;
         transform: scale(0.7);
         transition: transform 0.3s;
@@ -144,6 +150,11 @@ const Info = styled.div`
     font-weight: bold;
     font-size: 17px;
     margin-bottom: 5px;
+  }
+
+  > div {
+    color: var(--gray-color);
+    margin: 10px 0;
   }
 
   > p {
@@ -183,18 +194,20 @@ const Card = ({ item, loading }: CardType) => {
   return (
     <Wrapper key={index}>
       <ImageSlide>
-        <div>
-          {slide > 0 && (
-            <button type="button" onClick={prevSlide} className="left">
-              <BsArrowLeftShort />
-            </button>
-          )}
-          {slide < images.length - 1 && (
-            <button type="button" onClick={nextSlide} className="right">
-              <BsArrowRightShort />
-            </button>
-          )}
-        </div>
+        {!loading && (
+          <div>
+            {slide > 0 && (
+              <button type="button" onClick={prevSlide} className="left">
+                <BsArrowLeftShort />
+              </button>
+            )}
+            {slide < images.length - 1 && (
+              <button type="button" onClick={nextSlide} className="right">
+                <BsArrowRightShort />
+              </button>
+            )}
+          </div>
+        )}
         <div>
           {loading && (
             <Skeleton style={{
@@ -230,7 +243,7 @@ const Card = ({ item, loading }: CardType) => {
       </ImageSlide>
       <Info>
         <h2>{loading ? <Skeleton /> : title}</h2>
-        <p>{loading ? <Skeleton /> : ageText}</p>
+        <div>{loading ? <Skeleton /> : ageText}</div>
         <p>{loading ? <Skeleton /> : priceText}</p>
       </Info>
     </Wrapper>

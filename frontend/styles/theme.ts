@@ -6,6 +6,7 @@ const defaultTheme: BaseTheme = {
     black: '#000000',
     primary: '#0d47a1',
     gray: '#ccc9c6',
+    hover: '#f7f7f7',
   },
   space: {
     xl: '32px',
@@ -19,7 +20,7 @@ const defaultTheme: BaseTheme = {
     lg: '1600px',
     md: '1024px',
     sm: '720px',
-    xs: '480px',
+    xs: '600px',
   },
 };
 
@@ -30,7 +31,7 @@ const lightTheme: BaseTheme = {
     font: '#030303',
     header: 'rgba(255, 255, 255, 0.98)',
     shadow: 'rgba(0, 0, 0, 0.02) 0 1px 3px 0, rgba(27, 31, 35, 0.15) 0 0 0 1px',
-    gray: '#f7f7f7',
+    gray: '#6c6c6c',
   },
   space: defaultTheme.space,
   breakpoint: defaultTheme.breakpoint,

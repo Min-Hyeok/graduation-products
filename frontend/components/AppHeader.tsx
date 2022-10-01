@@ -7,6 +7,8 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { TbUserCircle } from 'react-icons/tb';
 import { useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+import Popup, { PopupRefObject } from '@components/Popup';
+import SignUp from '@components/form/SignUp';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -82,8 +84,10 @@ const UserInfo = styled.div`
     border-radius: 15px;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     box-sizing: border-box;
+    overflow: hidden;
 
-    > div {
+    > button {
+      width: 100%;
       height: 40px;
       display: flex;
       align-items: center;
@@ -96,7 +100,7 @@ const UserInfo = styled.div`
       }
 
       :hover {
-        background-color: var(--gray-color);
+        background-color: var(--hover-color);
       }
     }
   }
@@ -105,7 +109,9 @@ const UserInfo = styled.div`
 const AppHeader = () => {
   const menuRef = useRef(null);
   const searchText = useInput('');
+  const popupRef = useRef<PopupRefObject>(null);
   const [showMenu, setShowMenu] = useState(false);
+
   const showUserMenu = () => {
     setShowMenu(true);
   };
@@ -114,10 +120,20 @@ const AppHeader = () => {
     setShowMenu(false);
   };
 
+  const openRegisterPopup = () => {
+    if (popupRef.current) {
+      popupRef.current.open({
+        title: '회원가입',
+        content: <SignUp />,
+      });
+    }
+  };
+
   useOnClickOutside(menuRef, hideUserMenu);
 
   return (
     <Wrapper>
+      <Popup ref={popupRef} />
       <Header>
         <Link href="/">
           <Logo>
@@ -126,15 +142,15 @@ const AppHeader = () => {
           </Logo>
         </Link>
         <SearchArea>
-          <TextField {...searchText} search />
+          <TextField {...searchText} name="search" search />
         </SearchArea>
         <UserInfo ref={menuRef} onClick={showUserMenu}>
           <GiHamburgerMenu />
           <TbUserCircle />
           {showMenu && (
             <div>
-              <div className="bold">회원가입</div>
-              <div>로그인</div>
+              <button type="button" className="bold" onClick={openRegisterPopup}>회원가입</button>
+              <button type="button">로그인</button>
             </div>
           )}
         </UserInfo>

@@ -12,8 +12,24 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: var(--md-space);
   max-width: var(--lg-breakpoint);
-  padding: var(--md-space) 0;
+  padding: var(--md-space);
   margin: 0 auto;
+
+  ${({ theme }) => `
+    @media screen and (max-width: ${theme.breakpoint.lg}) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @media screen and (max-width: ${theme.breakpoint.md}) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media screen and (max-width: ${theme.breakpoint.sm}) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media screen and (max-width: ${theme.breakpoint.xs}) {
+      grid-template-columns: 1fr;
+    }
+  `}
+
 `;
 
 const Home: NextPage = () => {

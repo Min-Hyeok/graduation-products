@@ -3,19 +3,20 @@ import {
   ChangeEvent, InputHTMLAttributes, useRef, useState,
 } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { IoMdClose } from 'react-icons/io';
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
 const InputWrapper = styled.div`
   position: relative;
+  width: 100%;
 
   > input {
+    width: 100%;
     border-radius: 20px;
-    padding: 10px 15px;
+    padding: 10px 30px 10px 15px;
     border: none;
     box-shadow: var(--shadow-color);
     background-color: var(--white-color);
@@ -38,14 +39,12 @@ const InputWrapper = styled.div`
 `;
 
 const IconArea = styled.div`
-  width: 35px;
+  min-width: 35px;
   height: 35px;
+  line-height: calc(60% + 35px);
   border-radius: 50%;
   margin-left: 8px;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: var(--white-color);
   background-color: var(--primary-color);
   cursor: pointer;
@@ -97,7 +96,7 @@ const TextField = ({
         />
         {showClear && (
           <button type="button" onClick={clearInput}>
-            <AiOutlineCloseCircle />
+            <IoMdClose />
           </button>
         )}
       </InputWrapper>
