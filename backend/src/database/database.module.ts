@@ -10,7 +10,7 @@ import { User } from '@entity/user.entity';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'dogsAndCats',
+      database: 'pets',
       entities: [User],
       synchronize: process.env.NODE_ENV !== 'production',
     }),
