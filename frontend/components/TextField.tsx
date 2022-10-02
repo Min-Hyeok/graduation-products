@@ -24,6 +24,7 @@ const InputWrapper = styled.div`
       transition: 0.2s all;
       padding: 0 5px;
       box-sizing: content-box;
+      cursor: text;
 
       &.active {
         font-size: 12px;
