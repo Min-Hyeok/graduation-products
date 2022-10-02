@@ -13,35 +13,55 @@ const InputWrapper = styled.div`
   position: relative;
   width: 100%;
 
+  > button {
+    :nth-of-type(1) {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateX(-10%) translateY(-50%);
+      color: var(--gray-color);
+      font-size: 16px;
+      transition: 0.2s all;
+      padding: 0 5px;
+      box-sizing: content-box;
+
+      &.active {
+        font-size: 12px;
+        transform: translateX(-10%) translateY(-180%);
+        background-color: var(--white-color);
+      }
+    }
+
+    :nth-of-type(2) {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+
+      > svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
   > input {
     width: 100%;
-    border-radius: 5px;
-    padding: 10px 30px 10px 15px;
+    border-radius: 20px;
+    padding: 13.5px 30px 13.5px 15px;
     border: none;
     box-shadow: var(--shadow-color);
     background-color: var(--white-color);
   }
-
-  > button {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-
-    > svg {
-      width: 100%;
-      height: 100%;
-    }
-  }
 `;
 
 const IconArea = styled.div`
-  min-width: 35px;
-  height: 35px;
-  line-height: calc(60% + 35px);
+  min-width: 42px;
+  height: 42px;
+  line-height: calc(60% + 44px);
   border-radius: 50%;
   margin-left: 8px;
   text-align: center;
@@ -57,9 +77,10 @@ const IconArea = styled.div`
 
 interface TextFieldType extends InputHTMLAttributes<HTMLInputElement> {
   reset?: () => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
+  onFocus?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   search?: boolean;
+  description?: string;
 }
 
 const TextField = ({
@@ -67,10 +88,19 @@ const TextField = ({
   onChange,
   reset,
   search,
+  description,
   ...props
 }: TextFieldType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showClear, setShowClear] = useState(false);
+  const [focus, setFocus] = useState(false);
+
+  const clearInput = () => {
+    reset?.();
+
+    setShowClear(false);
+    setFocus(false);
+  };
 
   const customOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e);
@@ -82,21 +112,39 @@ const TextField = ({
     }
   };
 
-  const clearInput = () => {
-    reset?.();
-    setShowClear(false);
+  const customOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
+    setFocus(true);
+
+    props?.onFocus?.(e);
+  };
+
+  const customOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!inputRef?.current?.value.length) {
+      setFocus(false);
+    }
+
+    props?.onBlur?.(e);
+  };
+
+  const focusInput = () => {
+    inputRef?.current?.focus();
+    setFocus(true);
   };
 
   return (
     <Wrapper>
       <InputWrapper>
+        <button type="button" onClick={focusInput} className={focus ? 'active' : ''}>{props?.placeholder}</button>
         <input
           ref={inputRef}
           type="text"
           name="text field"
           {...props}
+          placeholder={focus ? description : ''}
           value={value}
           onChange={customOnChange}
+          onFocus={customOnFocus}
+          onBlur={customOnBlur}
         />
         {showClear && (
           <button type="button" onClick={clearInput}>

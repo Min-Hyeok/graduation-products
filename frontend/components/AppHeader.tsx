@@ -142,7 +142,7 @@ const AppHeader = () => {
           </Logo>
         </Link>
         <SearchArea>
-          <TextField {...searchText} name="search" search />
+          <TextField {...searchText} name="search" placeholder="검색" description="먼치킨" search />
         </SearchArea>
         <UserInfo ref={menuRef} onClick={showUserMenu}>
           <GiHamburgerMenu />

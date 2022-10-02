@@ -47,7 +47,7 @@ const SignUp = () => {
       </Form>
       <Form>
         <p>비밀번호</p>
-        <TextField {...password} type="password" placeholder="비밀번호" />
+        <TextField {...password} type="password" placeholder="비밀번호" description="영문 대소문자 및 숫자 포함 8자리 이상" />
       </Form>
       <Form>
         <p>닉네임</p>
@@ -55,7 +55,7 @@ const SignUp = () => {
       </Form>
       <Form>
         <p>이메일</p>
-        <TextField {...email} placeholder="이메일" />
+        <TextField {...email} placeholder="이메일" description="user@email.com" />
       </Form>
       <ButtonWrap>
         <Button title="회원가입" />

@@ -6,12 +6,13 @@ const Wrapper = styled.div`
   background-color: var(--primary-color);
   color: var(--white-color);
   position: relative;
-  border-radius: 10px;
+  border-radius: 25px;
   overflow: hidden;
 
   > button {
     width: 100%;
     height: 100%;
+    font-size: 15px;
   }
 `;
 
