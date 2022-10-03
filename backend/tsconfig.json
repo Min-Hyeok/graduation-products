@@ -21,8 +21,8 @@
       "@database/*": [
         "./src/database/*"
       ],
-      "@entity/*": [
-        "./src/entity/*"
+      "@graphql/*": [
+        "./src/graphql/*"
       ]
     }
   }
