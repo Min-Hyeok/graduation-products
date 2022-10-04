@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -20,6 +20,18 @@ export class UserService {
   }
 
   async signUp(createUserInput: CreateUserInput): Promise<UpdateUserInput> {
+    const isRegisterUser = await this.findUser(createUserInput.userId);
+
+    if (isRegisterUser) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: '중복된 아이디 입니다.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const encryptedPassword = await bcrypt.hash(
       createUserInput.password,
       saltRounds,
@@ -44,5 +56,11 @@ export class UserService {
       success: true,
       error: false,
     };
+  }
+
+  private async findUser(userId: string): Promise<User> {
+    return await this.userRepository.findOneBy({
+      userId,
+    });
   }
 }
