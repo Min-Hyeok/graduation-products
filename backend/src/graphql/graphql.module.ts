@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
       driver: ApolloDriver,
       autoSchemaFile: true,
       playground: true,
+      path: '/api/v1',
     }),
     UserModule,
   ],

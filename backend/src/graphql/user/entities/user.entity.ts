@@ -1,5 +1,10 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -21,18 +26,18 @@ export class User {
   userName: string;
 
   @Field(() => String, { description: '회원 전화번호' })
-  @Column({ length: 13 })
+  @Column({ length: 20 })
   phoneNumber: string;
 
   @Field(() => String, { description: '회원 이메일 주소' })
   @Column({ length: 50 })
   email: string;
 
-  @Field(() => Date, { description: '회원가입 일' })
-  @Column()
+  @Field(() => Date, { description: '회원가입일' })
+  @CreateDateColumn()
   registerDate: Date;
 
-  @Field(() => Date, { description: '마지막 로그인 시간' })
-  @Column()
+  @Field(() => Date, { description: '마지막으로 로그인 한 날짜' })
+  @CreateDateColumn()
   loginDate: Date;
 }

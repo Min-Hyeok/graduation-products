@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { UpdateUserInput } from '@graphql/user/dto/update-user.input';
 
 @Injectable()
 export class UserService {
@@ -20,15 +20,18 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  async signUp(createUserInput: CreateUserInput): Promise<UpdateUserInput> {
+    await this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values([createUserInput])
+      .execute();
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    return {
+      message: '성공',
+      success: true,
+      error: false,
+    };
   }
 }
