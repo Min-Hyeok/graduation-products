@@ -12,10 +12,6 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
-  }
-
   findUserAll(): Promise<User[]> {
     return this.userRepository.find();
   }
