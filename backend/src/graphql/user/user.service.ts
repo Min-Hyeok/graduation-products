@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
+import { AuthService } from '@auth/auth.service';
 
 const saltRounds = 10;
 
@@ -13,6 +14,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly authService: AuthService,
   ) {}
 
   findUserAll(): Promise<User[]> {
@@ -72,6 +74,9 @@ export class UserService {
           '잘못된 비밀번호입니다. 다시 시도하거나 비밀번호 찾기를 클릭하여 재설정하세요.',
       });
     }
+
+    const params = this.authService.login(userData);
+    console.log('params', params);
 
     return true;
   }
