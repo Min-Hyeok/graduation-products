@@ -23,6 +23,9 @@
       ],
       "@graphql/*": [
         "./src/graphql/*"
+      ],
+      "@auth/*": [
+        "./src/auth/*"
       ]
     }
   }

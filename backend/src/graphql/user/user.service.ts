@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -23,13 +23,10 @@ export class UserService {
     const isRegisterUser = await this.findUser(createUserInput.userId);
 
     if (isRegisterUser) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          message: '중복된 아이디 입니다.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException({
+        status: HttpStatus.BAD_REQUEST,
+        message: '중복된 아이디 입니다.',
+      });
     }
 
     const encryptedPassword = await bcrypt.hash(
@@ -58,13 +55,10 @@ export class UserService {
     const userData = await this.findUser(loginUserInput.userId);
 
     if (!userData) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          message: '회원 정보를 찾을 수 없습니다.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException({
+        status: HttpStatus.BAD_REQUEST,
+        message: '회원 정보를 찾을 수 없습니다.',
+      });
     }
 
     const isMatchedPassword = await bcrypt.compare(
@@ -73,20 +67,16 @@ export class UserService {
     );
 
     if (!isMatchedPassword) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          message:
-            '잘못된 비밀번호입니다. 다시 시도하거나 비밀번호 찾기를 클릭하여 재설정하세요.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException({
+        message:
+          '잘못된 비밀번호입니다. 다시 시도하거나 비밀번호 찾기를 클릭하여 재설정하세요.',
+      });
     }
 
     return true;
   }
 
-  private async findUser(userId: string): Promise<User> {
+  async findUser(userId: string): Promise<User> {
     return await this.userRepository.findOneBy({
       userId,
     });
