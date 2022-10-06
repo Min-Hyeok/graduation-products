@@ -12,9 +12,9 @@ RUN groupadd sshgroup && useradd -ms /bin/bash -g sshgroup sshuser
 # sshuser 폴더 하나 만들고
 RUN mkdir -p /home/sshuser/.ssh
 # authorized_keys 파일의 ssh 공용 키를 복사합니다. 아래 idkey.pub은 ssh-keygen에서 가져온 공개 키 파일입니다. 이 디렉터리는 기본적으로 ~/.ssh 디렉터리에 있습니다.
-COPY idkey.pub /home/sshuser/.ssh/authorized_keys
+# 오류나서(idkey.pub 파일이 없..어) 잠깐 주석처리 COPY idkey.pub /home/sshuser/.ssh/authorized_keys
 # 키 파일의 소유권 변경하고 파일 권한도 좀 주고
-RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
+# RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
 # ssh 실행하면 끝
 RUN service ssh start
 
