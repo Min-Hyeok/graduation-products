@@ -13,6 +13,13 @@ import { User } from '@graphql/user/entities/user.entity';
       database: 'pets',
       entities: [User],
       synchronize: process.env.NODE_ENV !== 'production',
+      cache: {
+        type: 'redis',
+        options: {
+          host: 'localhost',
+          port: 6379,
+        },
+      },
     }),
   ],
 })

@@ -3,8 +3,8 @@ import { CreateUserInput } from './dto/create-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { UpdateUserInput } from './dto/update-user.input';
 import * as bcrypt from 'bcrypt';
+import { LoginUserInput } from '@graphql/user/dto/login-user.input';
 
 const saltRounds = 10;
 
@@ -19,14 +19,14 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async signUp(createUserInput: CreateUserInput): Promise<UpdateUserInput> {
+  async signUp(createUserInput: CreateUserInput): Promise<boolean> {
     const isRegisterUser = await this.findUser(createUserInput.userId);
 
     if (isRegisterUser) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: '중복된 아이디 입니다.',
+          message: '중복된 아이디 입니다.',
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -51,11 +51,39 @@ export class UserService {
       ])
       .execute();
 
-    return {
-      message: '성공',
-      success: true,
-      error: false,
-    };
+    return true;
+  }
+
+  async signIn(loginUserInput: LoginUserInput): Promise<boolean> {
+    const userData = await this.findUser(loginUserInput.userId);
+
+    if (!userData) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: '회원 정보를 찾을 수 없습니다.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const notMatchedPassword = await bcrypt.compare(
+      loginUserInput.password,
+      userData.password,
+    );
+
+    if (!notMatchedPassword) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message:
+            '잘못된 비밀번호입니다. 다시 시도하거나 비밀번호 찾기를 클릭하여 재설정하세요.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return true;
   }
 
   private async findUser(userId: string): Promise<User> {

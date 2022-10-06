@@ -31,6 +31,7 @@ services:
     networks:
       - default
 
+  # npm install && npm run start:dev;
   nodejs:
     image: pets
     build: .
@@ -42,7 +43,6 @@ services:
         do
           sleep 5;
         done;
-        npm install && npm run start:dev;
       "
     depends_on:
       - mariadb
