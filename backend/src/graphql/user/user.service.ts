@@ -67,12 +67,12 @@ export class UserService {
       );
     }
 
-    const notMatchedPassword = await bcrypt.compare(
+    const isMatchedPassword = await bcrypt.compare(
       loginUserInput.password,
       userData.password,
     );
 
-    if (!notMatchedPassword) {
+    if (!isMatchedPassword) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
