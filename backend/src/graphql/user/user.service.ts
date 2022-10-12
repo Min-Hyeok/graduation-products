@@ -53,7 +53,7 @@ export class UserService {
     return true;
   }
 
-  async signIn(loginUserInput: LoginUserInput): Promise<boolean> {
+  async signIn(loginUserInput: LoginUserInput): Promise<JwtToken> {
     const userData = await this.findUser(loginUserInput.userId);
 
     if (!userData) {
@@ -75,10 +75,12 @@ export class UserService {
       });
     }
 
-    const params = this.authService.login(userData);
-    console.log('params', params);
-
-    return true;
+    const { access_token, refresh_token }: JwtToken =
+      await this.authService.getTokens(userData);
+    console.log('refresh_token', refresh_token);
+    return {
+      access_token,
+    };
   }
 
   async findUser(userId: string): Promise<User> {

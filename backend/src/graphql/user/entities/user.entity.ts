@@ -40,4 +40,7 @@ export class User {
   @Field(() => Date, { description: '마지막으로 로그인 한 날짜' })
   @CreateDateColumn()
   loginDate: Date;
+
+  @Field(() => String, { description: '엑세스 토큰' })
+  access_token: string;
 }
