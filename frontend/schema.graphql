@@ -1,0 +1,71 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  """이메일"""
+  email: String = ""
+
+  """비밀번호"""
+  password: String = ""
+
+  """휴대전화 번호"""
+  phoneNumber: String = ""
+
+  """아이디"""
+  userId: String = ""
+
+  """이름(닉네임)"""
+  userName: String = ""
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginUserInput {
+  """비밀번호"""
+  password: String = ""
+
+  """아이디"""
+  userId: String = ""
+}
+
+type Mutation {
+  signIn(loginUserInput: LoginUserInput!): User!
+  signUp(createUserInput: CreateUserInput!): User!
+}
+
+type Query {
+  findUserAll: [User!]!
+}
+
+type User {
+  """엑세스 토큰"""
+  access_token: String!
+
+  """회원 이메일 주소"""
+  email: String!
+
+  """회원 고유 번호"""
+  id: Int!
+
+  """마지막으로 로그인 한 날짜"""
+  loginDate: DateTime!
+
+  """회원 비밀번호"""
+  password: String!
+
+  """회원 전화번호"""
+  phoneNumber: String!
+
+  """회원가입일"""
+  registerDate: DateTime!
+
+  """회원 ID"""
+  userId: String!
+
+  """회원 이름 (닉네임)"""
+  userName: String!
+}

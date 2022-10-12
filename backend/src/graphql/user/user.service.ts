@@ -19,11 +19,9 @@ const saltRounds = 10;
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
-    @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   findUserAll(): Promise<User[]> {
@@ -87,7 +85,12 @@ export class UserService {
     const { access_token, refresh_token }: JwtToken =
       await this.authService.getTokens(userData);
 
-    await this.cacheManager.set(`refresh_token_${userData.id}`, refresh_token);
+    const encryptedRefreshToken = await bcrypt.hash(refresh_token, saltRounds);
+
+    await this.cacheManager.set(
+      `refresh_token_${userData.id}`,
+      encryptedRefreshToken,
+    );
 
     return {
       access_token,

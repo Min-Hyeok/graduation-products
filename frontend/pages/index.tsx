@@ -2,10 +2,18 @@ import type { NextPage } from 'next';
 import useFakeAnimalList from '@hooks/useFakeAnimalList';
 import Card from '@components/Card';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { gql, useQuery } from '@apollo/client';
 // import { useAppSelector } from '@store/hooks';
 
 // const theme = useAppSelector((state) => state.setting.theme);
+
+const TEST = gql`
+    query {
+        findUserAll {
+            userId
+        }
+    }
+`;
 
 const Wrapper = styled.div`
   display: grid;
@@ -34,13 +42,9 @@ const Wrapper = styled.div`
 
 const Home: NextPage = () => {
   const list = useFakeAnimalList();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  });
+  const {
+    loading,
+  } = useQuery(TEST);
 
   return (
     <Wrapper>
