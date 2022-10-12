@@ -1,4 +1,10 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  CACHE_MANAGER,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -6,6 +12,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
 import { AuthService } from '@auth/auth.service';
+import { Cache } from 'cache-manager';
 
 const saltRounds = 10;
 
@@ -15,6 +22,8 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   findUserAll(): Promise<User[]> {
@@ -77,7 +86,9 @@ export class UserService {
 
     const { access_token, refresh_token }: JwtToken =
       await this.authService.getTokens(userData);
-    console.log('refresh_token', refresh_token);
+
+    await this.cacheManager.set(`refresh_token_${userData.id}`, refresh_token);
+
     return {
       access_token,
     };

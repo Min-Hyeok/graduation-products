@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { User } from '@graphql/user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '@auth/constants';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+  ) {}
 
   async getTokens(user: User): Promise<JwtToken> {
     const payload = {

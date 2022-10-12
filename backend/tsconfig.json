@@ -26,6 +26,9 @@
       ],
       "@auth/*": [
         "./src/auth/*"
+      ],
+      "@cache/*": [
+        "./src/cache/*"
       ]
     }
   },

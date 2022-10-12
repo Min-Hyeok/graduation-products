@@ -26,7 +26,12 @@ export class UserResolver {
   @Mutation(() => User)
   async signIn(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
-  ): Promise<object> {
+  ): Promise<JwtToken> {
     return await this.userService.signIn(loginUserInput);
   }
+
+  // @Query(() => [User], { name: 'token' })
+  // async getToken: Promise<JwtToken> {
+  //   return await
+  // }
 }
