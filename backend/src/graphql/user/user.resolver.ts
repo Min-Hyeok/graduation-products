@@ -3,8 +3,9 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from '@graphql/user/dto/create-user.input';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
-import { UseGuards } from '@nestjs/common';
+import { Res, UseGuards } from '@nestjs/common';
 import { AccessTokenGuard } from '@auth/access-token.guard';
+import { Response } from 'express';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -26,8 +27,17 @@ export class UserResolver {
   @Mutation(() => User)
   async signIn(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
-  ): Promise<JwtToken> {
-    return await this.userService.signIn(loginUserInput);
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<object> {
+    const { access_token } = await this.userService.signIn(loginUserInput);
+    console.log(response.cookie);
+    // res.res.cookie('token', access_token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   maxAge: 1000 * 60 * 10,
+    // });
+
+    return { status: true };
   }
 
   // @Query(() => [User], { name: 'token' })

@@ -41,6 +41,6 @@ export class User {
   @CreateDateColumn()
   loginDate: Date;
 
-  @Field(() => String, { description: '엑세스 토큰' })
-  access_token: string;
+  @Field(() => Boolean, { description: 'API 성공여부' })
+  status: boolean;
 }
