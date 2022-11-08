@@ -1,15 +1,19 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from '@graphql/user/dto/create-user.input';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
-import { Res, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { AccessTokenGuard } from '@auth/access-token.guard';
-import { Response } from 'express';
+import { ExpressContext } from 'apollo-server-express';
+import { AuthService } from '@auth/auth.service';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @UseGuards(AccessTokenGuard)
   @Query(() => [User], { name: 'findUserAll' })
@@ -27,21 +31,30 @@ export class UserResolver {
   @Mutation(() => User)
   async signIn(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<object> {
-    const { access_token } = await this.userService.signIn(loginUserInput);
-    console.log(response.cookie);
-    // res.res.cookie('token', access_token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   maxAge: 1000 * 60 * 10,
-    // });
+    @Context() context: ExpressContext,
+  ): Promise<JwtToken> {
+    const { access_token, SSID } = await this.userService.signIn(
+      loginUserInput,
+    );
 
-    return { status: true };
+    context.res.cookie('SSID', SSID, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    return {
+      access_token: access_token,
+    };
   }
 
-  // @Query(() => [User], { name: 'token' })
-  // async getToken: Promise<JwtToken> {
-  //   return await
-  // }
+  @Query(() => [User], { name: 'getToken' })
+  async getToken(@Context() context: ExpressContext): Promise<JwtToken> {
+    const test = await this.authService.hasRefreshToken(
+      context.req.cookies?.SSID,
+    );
+    console.log(test);
+    return {
+      access_token: '',
+    };
+  }
 }
