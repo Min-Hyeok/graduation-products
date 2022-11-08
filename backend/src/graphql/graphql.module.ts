@@ -12,7 +12,7 @@ import { join } from 'path';
       sortSchema: true,
       playground: true,
       debug: process.env.NODE_ENV !== 'production',
-      path: '/api/v1',
+      path: '/v1',
       context: ({ req, connection }) => {
         if (req) {
           const user = req.headers.authorization;

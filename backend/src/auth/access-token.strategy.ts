@@ -7,19 +7,17 @@ import { User } from '@graphql/user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class AccessTokenStrategy extends PassportStrategy(
-  Strategy,
-  'jwt-access',
-) {
+export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly jwtService: JwtService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtConstants.REFRESH_TOKEN_SECRET,
-      passReqToCallback: true,
+      ignoreExpiration: false,
     });
   }
 
   validate(req: Request, payload: User) {
+    console.log('access-token.stst');
     const access_token = req
       ?.get('authorization')
       ?.replace('Bearer', '')

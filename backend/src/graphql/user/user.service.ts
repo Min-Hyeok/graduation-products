@@ -83,17 +83,17 @@ export class UserService {
     }
 
     const { access_token, refresh_token }: JwtToken =
-      await this.authService.getTokens(userData);
+      await this.authService.generateTokens(userData);
 
     const encryptedRefreshToken = await bcrypt.hash(refresh_token, saltRounds);
+    const SSID = Math.random().toString(36).substring(2, 13);
+    console.log('SSID', SSID);
 
-    await this.cacheManager.set(
-      `refresh_token_${userData.id}`,
-      encryptedRefreshToken,
-    );
+    await this.cacheManager.set(SSID, encryptedRefreshToken);
 
     return {
       access_token,
+      SSID,
     };
   }
 

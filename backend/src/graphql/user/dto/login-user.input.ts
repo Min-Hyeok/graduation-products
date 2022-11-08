@@ -10,4 +10,7 @@ export class LoginUserInput {
   @Field(() => String, { description: '비밀번호' })
   @IsNotEmpty({ message: '비밀번호는 필수입력 값입니다.' })
   password = '';
+
+  @Field(() => String, { description: '세션 ID' })
+  SSID = '';
 }

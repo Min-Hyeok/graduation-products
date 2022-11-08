@@ -5,7 +5,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { AccessTokenStrategy } from '@auth/access-token.strategy';
 
 @Module({
-  imports: [PassportModule, JwtModule.register({}), CacheModule.register()],
+  imports: [
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
+    JwtModule.register({}),
+    CacheModule.register(),
+  ],
   providers: [AuthService, AccessTokenStrategy],
   exports: [AuthService],
 })

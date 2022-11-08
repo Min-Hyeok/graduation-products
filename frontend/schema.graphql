@@ -25,6 +25,9 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input LoginUserInput {
+  """세션 ID"""
+  SSID: String = ""
+
   """비밀번호"""
   password: String = ""
 
@@ -39,10 +42,11 @@ type Mutation {
 
 type Query {
   findUserAll: [User!]!
+  getToken: [User!]!
 }
 
 type User {
-  """엑세스 토큰"""
+  """access token"""
   access_token: String!
 
   """회원 이메일 주소"""

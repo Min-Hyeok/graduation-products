@@ -11,7 +11,7 @@ export class AuthService {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
-  async getTokens(user: User): Promise<JwtToken> {
+  async generateTokens(user: User): Promise<JwtToken> {
     const payload = {
       userName: user.userName,
       phoneNumber: user.phoneNumber,
@@ -34,5 +34,11 @@ export class AuthService {
       access_token: accessToken,
       refresh_token: refreshToken,
     };
+  }
+
+  async hasRefreshToken(SSID: string) {
+    const refreshToken = await this.cacheManager.get(SSID);
+    console.log('refreshToken', refreshToken);
+    return true;
   }
 }
