@@ -47,14 +47,14 @@ export class UserResolver {
     };
   }
 
-  @Query(() => [User], { name: 'getToken' })
-  async getToken(@Context() context: ExpressContext): Promise<JwtToken> {
-    const test = await this.authService.hasRefreshToken(
+  @Query(() => User, { name: 'getToken' })
+  async getToken(@Context() context: ExpressContext): Promise<object> {
+    const access_token = await this.authService.hasRefreshToken(
       context.req.cookies?.SSID,
     );
-    console.log(test);
+
     return {
-      access_token: '',
+      access_token: access_token,
     };
   }
 }

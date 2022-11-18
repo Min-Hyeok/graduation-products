@@ -6,9 +6,7 @@ import { AccessTokenStrategy } from '@auth/access-token.strategy';
 
 @Module({
   imports: [
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({}),
     CacheModule.register(),
   ],
