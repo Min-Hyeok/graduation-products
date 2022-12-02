@@ -36,7 +36,7 @@ const App = ({
   };
 
   const client = new ApolloClient({
-    uri: 'http://localhost:8080/api/v1/graphql',
+    uri: 'http://localhost:8080/v1/graphql',
     cache: new InMemoryCache(),
     ssrMode: true,
   });

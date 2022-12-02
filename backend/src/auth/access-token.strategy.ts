@@ -20,7 +20,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
       ?.get('authorization')
       ?.replace('Bearer', '')
       .trim();
-    console.log('access_token', access_token);
+
     if (!access_token) {
       throw new ForbiddenException();
     }

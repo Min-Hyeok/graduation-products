@@ -37,6 +37,10 @@ const SignUp = () => {
   const password = useInput('');
   const nickname = useInput('');
   const email = useInput('');
+  const phoneNumber = useInput('');
+
+  const signUp = () => {
+  };
 
   return (
     <Wrapper>
@@ -57,8 +61,12 @@ const SignUp = () => {
         <p>이메일</p>
         <TextField {...email} placeholder="이메일" description="user@email.com" />
       </Form>
+      <Form>
+        <p>휴대폰 번호</p>
+        <TextField {...phoneNumber} placeholder="휴대폰 번호" description="010-1234-5678" />
+      </Form>
       <ButtonWrap>
-        <Button title="회원가입" />
+        <Button onClick={signUp} type="button" text="회원가입" />
       </ButtonWrap>
     </Wrapper>
   );

@@ -32,28 +32,28 @@ services:
       - default
 
   # npm install && npm run start:dev;
-  nodejs:
-    image: pets
-    build: .
-    container_name: webserver
-    working_dir: /usr/src/app
-    command: >
-      bash -c "
-        while ! nc -z mariadb 3306;
-        do
-          sleep 5;
-        done;
-      "
-    depends_on:
-      - mariadb
-      - redis
-    ports:
-      - '8080:8080'
-      - '3000:3000'
-    volumes:
-      - .:/usr/src/app
-    networks:
-      - default
+#  nodejs:
+#    image: pets
+#    build: .
+#    container_name: webserver
+#    working_dir: /usr/src/app
+#    command: >
+#      bash -c "
+#        while ! nc -z mariadb 3306;
+#        do
+#          sleep 5;
+#        done;
+#      "
+#    depends_on:
+#      - mariadb
+#      - redis
+#    ports:
+#      - '8080:8080'
+#      - '3000:3000'
+#    volumes:
+#      - .:/usr/src/app
+#    networks:
+#      - default
 
 networks:
   default:

@@ -16,7 +16,7 @@ RUN mkdir -p /home/sshuser/.ssh
 # 키 파일의 소유권 변경하고 파일 권한도 좀 주고
 # RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
 # ssh 실행하면 끝
-RUN service ssh start
+# RUN service ssh start
 
 # 웹서버 실행
 RUN npm install

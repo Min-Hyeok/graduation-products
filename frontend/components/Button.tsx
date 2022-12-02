@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonHTMLAttributes } from 'react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,17 +17,18 @@ const Wrapper = styled.div`
   }
 `;
 
-interface ButtonType {
-  title: string;
+interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
   color?: string;
 }
 
 const Button = ({
-  title,
+  text,
   color,
+  ...props
 }: ButtonType) => (
   <Wrapper color={color}>
-    <button type="button">{title}</button>
+    <button onClick={props?.onClick} type="button">{text}</button>
   </Wrapper>
 );
 export default Button;
