@@ -1,5 +1,5 @@
 export const jwtConstants = {
-  ACCESS_TOKEN_EXPIRES_IN: '60m',
+  ACCESS_TOKEN_EXPIRES_IN: '1d',
   ACCESS_TOKEN_SECRET: 'xlqxQ97!ypT@2$QiY$zyf#aHG#',
   REFRESH_TOKEN_EXPIRES_IN: '30d',
   REFRESH_TOKEN_SECRET:

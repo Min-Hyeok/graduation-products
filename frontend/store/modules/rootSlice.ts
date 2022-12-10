@@ -3,23 +3,28 @@ import { RootState } from '@store/index';
 
 interface SettingsState {
   theme: 'light' | 'dark';
+  isLogin: boolean;
 }
 
 const initialState: SettingsState = {
   theme: 'light',
+  isLogin: false,
 };
 
-export const settingSlice = createSlice({
+export const rootSlice = createSlice({
   name: 'setting',
   initialState,
   reducers: {
     setTheme: (state, action: PayloadAction<SettingsState['theme']>) => {
       state.theme = action.payload;
     },
+    setLogin: (state, action: PayloadAction<SettingsState['isLogin']>) => {
+      state.isLogin = action.payload;
+    },
   },
 });
 
-export const { setTheme } = settingSlice.actions;
-export const selectTheme = (state: RootState) => state.setting.theme;
+export const { setTheme, setLogin } = rootSlice.actions;
+export const isLogin = (state: RootState) => state.root.isLogin;
 
-export default settingSlice.reducer;
+export default rootSlice.reducer;

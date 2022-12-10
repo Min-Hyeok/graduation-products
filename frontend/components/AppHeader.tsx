@@ -6,10 +6,14 @@ import TextField from '@components/TextField';
 import useInput from '@hooks/useInput';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { TbUserCircle } from 'react-icons/tb';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import Popup, { PopupRefObject } from '@components/Popup';
 import SignUp from '@components/form/SignUp';
+import SignIn from '@components/form/SignIn';
+import { setLogin } from '@store/modules/rootSlice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { toast } from 'react-toastify';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -111,6 +115,8 @@ const AppHeader = () => {
   const searchText = useInput('');
   const popupRef = useRef<PopupRefObject>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const isLogin = useAppSelector((state) => state.root.isLogin);
+  const dispatch = useAppDispatch();
 
   const showUserMenu = () => {
     setShowMenu(true);
@@ -129,7 +135,29 @@ const AppHeader = () => {
     }
   };
 
+  const openSignInPopup = () => {
+    if (popupRef.current) {
+      popupRef.current.open({
+        title: '로그인',
+        content: <SignIn close={popupRef.current.close} />,
+      });
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    dispatch(setLogin(false));
+
+    toast('로그아웃 되었습니다.');
+  };
+
   useOnClickOutside(menuRef, hideUserMenu);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(setLogin(true));
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -152,10 +180,15 @@ const AppHeader = () => {
         <UserInfo ref={menuRef} onClick={showUserMenu}>
           <GiHamburgerMenu />
           <TbUserCircle />
-          {showMenu && (
+          {showMenu && isLogin && (
+            <div>
+              <button type="button" className="bold" onClick={logout}>로그아웃</button>
+            </div>
+          )}
+          {showMenu && !isLogin && (
             <div>
               <button type="button" className="bold" onClick={openRegisterPopup}>회원가입</button>
-              <button type="button">로그인</button>
+              <button type="button" onClick={openSignInPopup}>로그인</button>
             </div>
           )}
         </UserInfo>

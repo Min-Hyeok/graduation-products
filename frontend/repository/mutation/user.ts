@@ -9,11 +9,8 @@ export const SIGN_UP = gql`
 `;
 
 export const SIGN_IN = gql`
-    mutation {
-        signIn(loginUserInput: {
-            userId: "alsgur0008"
-            password: "alsgur123"
-        }) {
+    mutation SignIn($input: LoginUserInput!) {
+        signIn(loginUserInput: $input) {
             access_token
         }
     }

@@ -1,11 +1,11 @@
 import { AnyAction, combineReducers } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import counter from '@store/modules/counterSlice';
-import setting from '@store/modules/settingSlice';
+import root from '@store/modules/rootSlice';
 
 const reducer = combineReducers({
   counter,
-  setting,
+  root,
 });
 
 const rootReducer = (

@@ -15,8 +15,7 @@ import { join } from 'path';
       path: '/v1',
       context: ({ req, connection }) => {
         if (req) {
-          const user = req.headers.authorization;
-          return { ...req, user };
+          return req;
         } else {
           return connection;
         }

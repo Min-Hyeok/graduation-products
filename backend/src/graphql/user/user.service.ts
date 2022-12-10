@@ -82,8 +82,7 @@ export class UserService {
 
     if (!isMatchedPassword) {
       throw new BadRequestException({
-        message:
-          '잘못된 비밀번호입니다. 다시 시도하거나 비밀번호 찾기를 클릭하여 재설정하세요.',
+        message: '잘못된 비밀번호입니다. 다시 시도해주세요.',
       });
     }
 

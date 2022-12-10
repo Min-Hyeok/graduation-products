@@ -12,11 +12,11 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtConstants.ACCESS_TOKEN_SECRET,
       ignoreExpiration: false,
+      passReqToCallback: true,
     });
   }
 
   async validate(req: Request) {
-    console.log('AccessTokenStrategy');
     const access_token = req
       ?.get('authorization')
       ?.replace('Bearer', '')
