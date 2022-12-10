@@ -12,9 +12,9 @@ import {
   ApolloClient, ApolloProvider, createHttpLink, InMemoryCache,
 } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
+import { setContext } from '@apollo/client/link/context';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { setContext } from '@apollo/client/link/context';
 
 const Wrapper = styled.div`
   padding-top: var(--header-height);
