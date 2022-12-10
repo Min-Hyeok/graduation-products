@@ -10,12 +10,13 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly jwtService: JwtService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtConstants.REFRESH_TOKEN_SECRET,
+      secretOrKey: jwtConstants.ACCESS_TOKEN_SECRET,
       ignoreExpiration: false,
     });
   }
 
   async validate(req: Request) {
+    console.log('AccessTokenStrategy');
     const access_token = req
       ?.get('authorization')
       ?.replace('Bearer', '')
