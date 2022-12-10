@@ -2,6 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Board {
+  """글 내용"""
+  content: String!
+
+  """게시글 고유 번호"""
+  id: Int!
+
+  """작성일"""
+  registerDate: DateTime!
+
+  """글 제목"""
+  subject: String!
+
+  """회원 고유 번호"""
+  userIndex: Int!
+
+  """작성자"""
+  writer: String!
+}
+
+input CreateBoardInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserInput {
   """비밀번호"""
   password: String = ""
@@ -33,13 +58,23 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createBoard(createBoardInput: CreateBoardInput!): Board!
+  removeBoard(id: Int!): Board!
   signIn(loginUserInput: LoginUserInput!): User!
   signUp(createUserInput: CreateUserInput!): User!
+  updateBoard(updateBoardInput: UpdateBoardInput!): Board!
 }
 
 type Query {
+  board(id: Int!): Board!
   findUserAll: [User!]!
   getToken: User!
+}
+
+input UpdateBoardInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 type User {

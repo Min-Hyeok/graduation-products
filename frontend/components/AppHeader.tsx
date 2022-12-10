@@ -14,6 +14,7 @@ import SignIn from '@components/form/SignIn';
 import { setLogin } from '@store/modules/rootSlice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -115,6 +116,7 @@ const AppHeader = () => {
   const searchText = useInput('');
   const popupRef = useRef<PopupRefObject>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const router = useRouter();
   const isLogin = useAppSelector((state) => state.root.isLogin);
   const dispatch = useAppDispatch();
 
@@ -151,13 +153,17 @@ const AppHeader = () => {
     toast('로그아웃 되었습니다.');
   };
 
+  const goToWritePage = () => {
+    router.push('/write');
+  };
+
   useOnClickOutside(menuRef, hideUserMenu);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(setLogin(true));
     }
-  }, []);
+  });
 
   return (
     <Wrapper>
@@ -183,6 +189,7 @@ const AppHeader = () => {
           {showMenu && isLogin && (
             <div>
               <button type="button" className="bold" onClick={logout}>로그아웃</button>
+              <button type="button" onClick={goToWritePage}>글쓰기</button>
             </div>
           )}
           {showMenu && !isLogin && (

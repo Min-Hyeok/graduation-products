@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@graphql/user/entities/user.entity';
+import { Board } from '@graphql/board/entities/board.entity';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { User } from '@graphql/user/entities/user.entity';
       username: 'root',
       password: 'root',
       database: 'pets',
-      entities: [User],
+      entities: [User, Board],
       synchronize: process.env.NODE_ENV !== 'production',
       cache: {
         type: 'redis',
