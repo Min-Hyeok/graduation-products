@@ -7,6 +7,5 @@ declare interface JwtToken {
 declare interface JwtTokenInfo {
   userName: string;
   phoneNumber: string;
-  email: string;
   id: number;
 }

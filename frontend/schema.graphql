@@ -3,16 +3,13 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
-  """이메일"""
-  email: String = ""
-
   """비밀번호"""
   password: String = ""
 
   """휴대전화 번호"""
   phoneNumber: String = ""
 
-  """아이디"""
+  """이메일"""
   userId: String = ""
 
   """이름(닉네임)"""
@@ -49,9 +46,6 @@ type User {
   """access token"""
   access_token: String!
 
-  """회원 이메일 주소"""
-  email: String!
-
   """회원 고유 번호"""
   id: Int!
 
@@ -67,7 +61,7 @@ type User {
   """회원가입일"""
   registerDate: DateTime!
 
-  """회원 ID"""
+  """회원 아이디(이메일)"""
   userId: String!
 
   """회원 이름 (닉네임)"""

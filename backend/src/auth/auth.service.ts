@@ -21,7 +21,6 @@ export class AuthService {
     const payload = {
       userName: user.userName,
       phoneNumber: user.phoneNumber,
-      email: user.email,
       id: user.id,
     };
 
@@ -66,7 +65,6 @@ export class AuthService {
     const { access_token } = await this.generateTokens({
       userName,
       phoneNumber,
-      email,
       id,
     });
 

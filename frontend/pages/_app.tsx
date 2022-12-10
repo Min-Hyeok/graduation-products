@@ -9,16 +9,15 @@ import { useEffect } from 'react';
 import AppHeader from '@components/AppHeader';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ToastContainer } from 'react-toastify';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Wrapper = styled.div`
   padding-top: var(--header-height);
 `;
 
-const App = ({
-  Component,
-  ...rest
-}: AppProps) => {
+const App = ({ Component, ...rest }: AppProps) => {
   const {
     store,
     props,
@@ -43,6 +42,15 @@ const App = ({
 
   useEffect(() => {
     setDarkModeTheme();
+    if (process.env.NODE_ENV !== 'production') {
+      window.addEventListener('error', (event) => {
+        event.stopImmediatePropagation();
+      });
+
+      window.addEventListener('unhandledrejection', (event) => {
+        event.stopImmediatePropagation();
+      });
+    }
   });
 
   return (
@@ -52,6 +60,7 @@ const App = ({
           <ThemeProvider theme={theme[state.setting.theme]}>
             <AppHeader />
             <GlobalStyle />
+            <ToastContainer />
             <Wrapper>
               <Component {...pageProps} />
             </Wrapper>

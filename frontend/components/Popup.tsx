@@ -57,6 +57,7 @@ export interface PopupType {
 
 export interface PopupRefObject {
   open: ({ title, content }: PopupType) => void;
+  close: () => void;
 }
 
 const Popup = (props: null, ref: Ref<PopupRefObject>) => {
@@ -85,12 +86,13 @@ const Popup = (props: null, ref: Ref<PopupRefObject>) => {
 
   useImperativeHandle(ref, () => ({
     open: openPopup,
+    close: closePopup,
   }));
 
   useOnClickOutside(popupContentRef, closePopup);
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
+  // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {state.popup && (
         <Wrapper>

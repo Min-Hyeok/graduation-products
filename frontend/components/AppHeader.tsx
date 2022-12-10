@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import PageLogo from '@assets/images/logo.png';
+// import PageLogo from '@assets/images/logo.png';
+import Image from 'next/image';
 import Link from 'next/link';
 import TextField from '@components/TextField';
 import useInput from '@hooks/useInput';
@@ -40,9 +41,8 @@ const Logo = styled.div`
   -webkit-user-drag: none;
   color: var(--primary-color);
 
-  > img {
-    max-width: 55px;
-    padding-right: 16px;
+  > p {
+    margin-left: 16px;
   }
 `;
 
@@ -124,7 +124,7 @@ const AppHeader = () => {
     if (popupRef.current) {
       popupRef.current.open({
         title: '회원가입',
-        content: <SignUp />,
+        content: <SignUp close={popupRef.current.close} />,
       });
     }
   };
@@ -137,8 +137,13 @@ const AppHeader = () => {
       <Header>
         <Link href="/">
           <Logo>
-            <img src={PageLogo} alt="" />
-            개냥이
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={50}
+              height={50}
+            />
+            <p>개냥이</p>
           </Logo>
         </Link>
         <SearchArea>

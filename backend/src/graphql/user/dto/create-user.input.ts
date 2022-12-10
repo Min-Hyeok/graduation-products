@@ -3,11 +3,10 @@ import { IsEmail, IsNotEmpty, IsPhoneNumber, Length } from 'class-validator';
 
 @InputType()
 export class CreateUserInput {
-  @Field(() => String, { description: '아이디' })
-  @IsNotEmpty({ message: '아이디는 필수입력 값입니다.' })
-  @Length(4, 20, {
-    message: '아이디는 4글자 이상 20글자 미만으로 입력해 주세요.',
-  })
+  @Field(() => String, { description: '이메일' })
+  @IsNotEmpty({ message: '이메일 주소는 필수입력 값입니다.' })
+  @IsEmail({}, { message: '이메일 주소 양식이 올바르지 않습니다.' })
+  @Length(5, 50, { message: '이메일 주소 길이가 올바르지 않습니다.' })
   userId = '';
 
   @Field(() => String, { description: '비밀번호' })
@@ -29,10 +28,4 @@ export class CreateUserInput {
   @IsPhoneNumber('KR', { message: '전화번호 양식이 올바르지 않습니다.' })
   @Length(8, 20, { message: '전화번호 길이가 잘못되었습니다.' })
   phoneNumber = '';
-
-  @Field(() => String, { description: '이메일' })
-  @IsNotEmpty({ message: '이메일 주소는 필수입력 값입니다.' })
-  @IsEmail({}, { message: '이메일 주소 양식이 올바르지 않습니다.' })
-  @Length(5, 50, { message: '이메일 주소 길이가 올바르지 않습니다.' })
-  email = '';
 }

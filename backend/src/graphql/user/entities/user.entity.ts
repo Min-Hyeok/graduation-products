@@ -13,8 +13,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String, { description: '회원 ID' })
-  @Column({ length: 20 })
+  @Field(() => String, { description: '회원 아이디(이메일)' })
+  @Column({ length: 100 })
   userId: string;
 
   @Field(() => String, { description: '회원 비밀번호' })
@@ -28,10 +28,6 @@ export class User {
   @Field(() => String, { description: '회원 전화번호' })
   @Column({ length: 20 })
   phoneNumber: string;
-
-  @Field(() => String, { description: '회원 이메일 주소' })
-  @Column({ length: 50 })
-  email: string;
 
   @Field(() => Date, { description: '회원가입일' })
   @CreateDateColumn()

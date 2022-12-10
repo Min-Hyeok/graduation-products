@@ -85,12 +85,7 @@ interface TextFieldType extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const TextField = ({
-  value,
-  onChange,
-  reset,
-  search,
-  description,
-  ...props
+  value, onChange, reset, search, description, ...props
 }: TextFieldType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showClear, setShowClear] = useState(false);
@@ -135,7 +130,14 @@ const TextField = ({
   return (
     <Wrapper>
       <InputWrapper>
-        <button type="button" onClick={focusInput} className={focus ? 'active' : ''}>{props?.placeholder}</button>
+        <button
+          tabIndex="-1"
+          type="button"
+          onClick={focusInput}
+          className={focus ? 'active' : ''}
+        >
+          {props?.placeholder}
+        </button>
         <input
           ref={inputRef}
           type="text"

@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
 import { AuthService } from '@auth/auth.service';
 import { Cache } from 'cache-manager';
+import { GraphQLError } from 'graphql';
 
 const saltRounds = 10;
 
@@ -32,10 +33,14 @@ export class UserService {
     const isRegisterUser = await this.findUser(createUserInput.userId);
 
     if (isRegisterUser) {
-      throw new BadRequestException({
-        status: HttpStatus.BAD_REQUEST,
-        message: '중복된 아이디 입니다.',
+      throw new GraphQLError('중복된 아이디 입니다.', {
+        extensions: { code: 200 },
       });
+      // throw new ApolloError('중복된 아이디 입니다.', 'SUCCESS');
+      // throw new BadRequestException({
+      //   status: HttpStatus.BAD_REQUEST,
+      //   message: '중복된 아이디 입니다.',
+      // });
     }
 
     const encryptedPassword = await bcrypt.hash(
