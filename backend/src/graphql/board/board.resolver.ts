@@ -38,7 +38,7 @@ export class BoardResolver {
     return this.boardService.findAll(page, search);
   }
 
-  @Query(() => Board, { name: 'board' })
+  @Query(() => Board, { name: 'findBoardOne' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.boardService.findOne(id);
   }

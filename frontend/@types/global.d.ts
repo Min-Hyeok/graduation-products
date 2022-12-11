@@ -1,8 +1,9 @@
 declare interface AnimalList {
+  id?: number;
   index: number;
-  images: Array<string>;
-  title: string;
-  varieties: string;
+  somnail: string;
+  subject: string;
+  breeds: string;
   age: number;
   price: number;
 }

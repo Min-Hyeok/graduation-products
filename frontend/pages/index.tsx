@@ -3,8 +3,9 @@ import useFakeAnimalList from '@hooks/useFakeAnimalList';
 import Card from '@components/Card';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
-import { GET_BOARD_ALL } from '@repository/query/board';
+import { FIND_BOARD_ALL } from '@repository/query/board';
 import { useEffect } from 'react';
+import useParseError from '@hooks/useParseError';
 
 const Wrapper = styled.div`
   display: grid;
@@ -35,20 +36,27 @@ const Home: NextPage = () => {
   const list = useFakeAnimalList();
   const search = '';
   const page = 1;
-  const { loading, error, data } = useQuery(GET_BOARD_ALL, {
+  const { loading, error, data } = useQuery(FIND_BOARD_ALL, {
     variables: { search, page },
   });
 
   useEffect(() => {
-    console.log('data', data);
-  }, data);
+    if (error) useParseError(error);
+  }, [data, error]);
 
   return (
     <Wrapper>
-      {list.map((item) => (
+      {loading && list.map((item: AnimalList, index: number) => (
         <Card
           item={item}
-          key={item.index}
+          key={index}
+          loading={loading}
+        />
+      ))}
+      {!loading && data.findBoardAll.map((item: AnimalList, index: number) => (
+        <Card
+          item={item}
+          key={index}
           loading={loading}
         />
       ))}

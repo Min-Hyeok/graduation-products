@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useRouter } from 'next/router';
 
 const Wrapper = styled.div`
   position: relative;
@@ -145,6 +146,7 @@ const Info = styled.div`
   padding: 0 10px 10px;
   box-sizing: border-box;
   font-size: 15px;
+  cursor: pointer;
 
   > h2 {
     font-weight: bold;
@@ -172,9 +174,10 @@ const Card = ({
   loading,
 }: CardType) => {
   const {
-    images,
-    title,
-    varieties,
+    id,
+    somnail,
+    subject,
+    breeds,
     age,
     price,
     index,
@@ -182,6 +185,8 @@ const Card = ({
   const [priceText, setPriceText] = useState('');
   const [ageText, setAgeText] = useState('');
   const [slide, setSlide] = useState(0);
+  const [somnailList, setSomnailList] = useState([]);
+  const router = useRouter();
 
   const nextSlide = () => {
     setSlide(slide + 1);
@@ -191,14 +196,23 @@ const Card = ({
     setSlide(slide - 1);
   };
 
+  const goToDetailPage = () => {
+    router.push(`/view/?id=${id}`);
+  };
+
   useEffect(() => {
     setPriceText(`${price ? `${Intl.NumberFormat('ko-KR')
       .format(price)}원` : '무료'}`);
 
-    if (varieties && age) {
-      setAgeText(`${varieties} / ${age}살`);
+    if (breeds && age) {
+      setAgeText(`${breeds} / ${age}살`);
     }
-  }, [age, price, varieties]);
+
+    if (somnail) {
+      const arr = JSON.parse(somnail).filter((src: string) => src.length);
+      setSomnailList(arr);
+    }
+  }, [age, price, breeds, somnail]);
 
   return (
     <Wrapper key={index}>
@@ -210,7 +224,7 @@ const Card = ({
                 <BsArrowLeftShort />
               </button>
             )}
-            {slide < images.length - 1 && (
+            {slide < somnailList.length - 1 && (
               <button type="button" onClick={nextSlide} className="right">
                 <BsArrowRightShort />
               </button>
@@ -230,7 +244,7 @@ const Card = ({
             transform: `translateX(-${slide * 100}%)`,
           }}
           >
-            {images.map((src, imagesIndex) => (
+            {somnailList.map((src, imagesIndex) => (
               <img src={src} alt="" key={imagesIndex} />
             ))}
           </div>
@@ -242,7 +256,7 @@ const Card = ({
                 transform: `translateX(-${(slide - 2) * 13}px)`,
               }}
               >
-                {images.map((src, dotsIndex) => (
+                {somnailList.map((src, dotsIndex) => (
                   <span className={slide === dotsIndex ? 'active' : ''} key={dotsIndex} />
                 ))}
               </div>
@@ -250,8 +264,8 @@ const Card = ({
           </SlideDots>
         )}
       </ImageSlide>
-      <Info>
-        <h2>{loading ? <Skeleton /> : title}</h2>
+      <Info onClick={goToDetailPage}>
+        <h2>{loading ? <Skeleton /> : subject}</h2>
         <div>{loading ? <Skeleton /> : ageText}</div>
         <p>{loading ? <Skeleton /> : priceText}</p>
       </Info>

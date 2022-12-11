@@ -46,8 +46,13 @@ export class BoardService {
     return response;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+  async findOne(id: number) {
+    const response = await this.boardRepository
+      .createQueryBuilder('board')
+      .where('board.id = :id', { id })
+      .getOne();
+
+    return response;
   }
 
   update(id: number, updateBoardInput: UpdateBoardInput) {

@@ -93,8 +93,8 @@ type Mutation {
 }
 
 type Query {
-  board(id: Int!): Board!
   findBoardAll(page: Int!, search: String!): [Board!]!
+  findBoardOne(id: Int!): Board!
   findUserAll: [User!]!
   getToken: User!
 }

@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   margin-top: var(--md-space);
   border-radius: 10px;
+  margin-bottom: 50px;
 
   > div {
     :nth-of-type(1),
@@ -54,19 +55,22 @@ const Write = () => {
     // ssr 문제 때문에 dynamic으로 import를 하면 ref를 사용 못하는 문제가 있는데 시간 없어서 일단 이렇게 해두고 나중에 수정 할 예정
     if (!document) return;
     const editor = Array.from(document.querySelectorAll('.ProseMirror')).pop();
-    const somnail = editor?.querySelector('img')?.src || '';
 
-    if (!somnail) {
+    if (!editor) return;
+
+    const imageSrcList = Array.from(editor.querySelectorAll('img')).map((img) => img.src) || [];
+
+    if (!imageSrcList.length) {
       toast('이미지를 한 장 이상 업로드 해주세요.');
       return;
     }
 
-    const response = await write({
+    await write({
       variables: {
         input: {
           subject: subject.value,
           content: editor?.innerHTML,
-          somnail,
+          somnail: JSON.stringify(imageSrcList),
           breeds: breeds.value,
           age: Number(age.value),
           price: Number(price.value),
@@ -74,11 +78,8 @@ const Write = () => {
       },
     });
 
-    console.log('response', response);
-
     toast('작성되었습니다.');
     router.push('/');
-    // router.push(`/view/${response.data.createBoard?.id}`);
   };
 
   useEffect(() => {
