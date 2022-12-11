@@ -7,3 +7,11 @@ export const CREATE_BOARD = gql`
         }
     }
 `;
+
+export const DELETE_BOARD = gql`
+    mutation RemoveBoard($id: Int!) {
+        removeBoard(id: $id) {
+            __typename
+        }
+    }
+`;

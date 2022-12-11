@@ -29,6 +29,12 @@ export class UserService {
     return this.userRepository.find();
   }
 
+  findUserOne(tokenInfo: JwtTokenInfo): Promise<User[]> {
+    return this.userRepository.findBy({
+      id: tokenInfo.id,
+    });
+  }
+
   async signUp(createUserInput: CreateUserInput): Promise<boolean> {
     const isRegisterUser = await this.findUser(createUserInput.userId);
 

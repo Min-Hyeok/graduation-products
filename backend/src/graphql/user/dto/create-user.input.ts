@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, IsPhoneNumber, Length } from 'class-validator';
 
 @InputType()
@@ -28,4 +28,7 @@ export class CreateUserInput {
   @IsPhoneNumber('KR', { message: '전화번호 양식이 올바르지 않습니다.' })
   @Length(8, 20, { message: '전화번호 길이가 잘못되었습니다.' })
   phoneNumber = '';
+
+  @Field(() => Int, { description: '유저 고유번호' })
+  id: number;
 }

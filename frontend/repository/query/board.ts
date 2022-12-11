@@ -24,6 +24,10 @@ export const FIND_BOARD_ONE = gql`
             price
             breeds
             registerDate
+            userIndex
+        }
+        findUserOne {
+            id
         }
     }
 `;

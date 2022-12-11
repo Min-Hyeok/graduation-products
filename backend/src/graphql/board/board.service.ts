@@ -59,7 +59,14 @@ export class BoardService {
     return `This action updates a #${id} board`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} board`;
+  async remove(id: number) {
+    const response = await this.boardRepository
+      .createQueryBuilder('board')
+      .delete()
+      .from(Board)
+      .where('id = :id', { id })
+      .execute();
+
+    return response;
   }
 }

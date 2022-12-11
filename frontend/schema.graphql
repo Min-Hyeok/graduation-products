@@ -55,6 +55,9 @@ input CreateBoardInput {
 }
 
 input CreateUserInput {
+  """유저 고유번호"""
+  id: Int!
+
   """비밀번호"""
   password: String = ""
 
@@ -96,6 +99,7 @@ type Query {
   findBoardAll(page: Int!, search: String!): [Board!]!
   findBoardOne(id: Int!): Board!
   findUserAll: [User!]!
+  findUserOne: [User!]!
   getToken: User!
 }
 

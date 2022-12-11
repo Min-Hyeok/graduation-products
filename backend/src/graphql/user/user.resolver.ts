@@ -3,8 +3,6 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from '@graphql/user/dto/create-user.input';
 import { LoginUserInput } from '@graphql/user/dto/login-user.input';
-import { UseGuards } from '@nestjs/common';
-import { AccessTokenGuard } from '@auth/access-token.guard';
 import { ExpressContext } from 'apollo-server-express';
 import { AuthService } from '@auth/auth.service';
 
@@ -15,10 +13,24 @@ export class UserResolver {
     private readonly authService: AuthService,
   ) {}
 
-  @UseGuards(AccessTokenGuard)
   @Query(() => [User], { name: 'findUserAll' })
   findUserAll() {
     return this.userService.findUserAll();
+  }
+
+  @Query(() => [User], { name: 'findUserOne' })
+  findUserOne(@Context() context: ExpressContext) {
+    const token = context.req
+      ?.get('authorization')
+      ?.replace('Bearer', '')
+      .trim();
+
+    if (!token) {
+      return [];
+    }
+
+    const tokenInfo = this.authService.getTokenInfo(token);
+    return this.userService.findUserOne(<JwtTokenInfo>tokenInfo);
   }
 
   @Mutation(() => User)
