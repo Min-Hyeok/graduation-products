@@ -12,6 +12,9 @@ type Board {
   """작성일"""
   registerDate: DateTime!
 
+  """게시글 썸네일 이미지"""
+  somnail: String!
+
   """글 제목"""
   subject: String!
 
@@ -23,8 +26,14 @@ type Board {
 }
 
 input CreateBoardInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """글제목"""
+  content: String!
+
+  """썸네일 이미지"""
+  somnail: String!
+
+  """글제목"""
+  subject: String!
 }
 
 input CreateUserInput {
@@ -72,9 +81,15 @@ type Query {
 }
 
 input UpdateBoardInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """글제목"""
+  content: String
   id: Int!
+
+  """썸네일 이미지"""
+  somnail: String
+
+  """글제목"""
+  subject: String
 }
 
 type User {

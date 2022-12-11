@@ -70,4 +70,8 @@ export class AuthService {
 
     return access_token;
   }
+
+  getTokenInfo(token: string) {
+    return this.jwtService.decode(token);
+  }
 }

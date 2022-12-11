@@ -1,15 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBoardInput } from './dto/create-board.input';
 import { UpdateBoardInput } from './dto/update-board.input';
+import { Board } from '@graphql/board/entities/board.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BoardService {
-  create(createBoardInput: CreateBoardInput) {
-    return 'This action adds a new board';
+  constructor(
+    @InjectRepository(Board)
+    private readonly boardRepository: Repository<Board>,
+  ) {}
+
+  async create(
+    createBoardInput: CreateBoardInput,
+    { userName, id }: JwtTokenInfo,
+  ) {
+    const response = await this.boardRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Board)
+      .values([
+        {
+          ...createBoardInput,
+          writer: userName,
+          userIndex: id,
+          registerDate: new Date(),
+        },
+      ])
+      .execute();
+
+    return response.identifiers.pop();
   }
 
   findAll() {
-    return `This action returns all board`;
+    return 'This action returns all board';
   }
 
   findOne(id: number) {

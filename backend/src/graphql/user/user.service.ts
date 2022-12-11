@@ -36,11 +36,6 @@ export class UserService {
       throw new GraphQLError('중복된 아이디 입니다.', {
         extensions: { code: 200 },
       });
-      // throw new ApolloError('중복된 아이디 입니다.', 'SUCCESS');
-      // throw new BadRequestException({
-      //   status: HttpStatus.BAD_REQUEST,
-      //   message: '중복된 아이디 입니다.',
-      // });
     }
 
     const encryptedPassword = await bcrypt.hash(

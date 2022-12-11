@@ -14,6 +14,7 @@ export class Board {
   id: number;
 
   @Field(() => Int, { description: '회원 고유 번호' })
+  @Column()
   userIndex: number;
 
   @Field(() => String, { description: '작성자' })
@@ -31,4 +32,8 @@ export class Board {
   @Field(() => Date, { description: '작성일' })
   @CreateDateColumn()
   registerDate: Date;
+
+  @Field(() => String, { description: '게시글 썸네일 이미지' })
+  @Column({ type: 'text' })
+  somnail: string;
 }
