@@ -30,9 +30,12 @@ export class BoardResolver {
     return this.boardService.create(createBoardInput, <JwtTokenInfo>tokenInfo);
   }
 
-  @Query(() => [Board], { name: 'board' })
-  findAll() {
-    return this.boardService.findAll();
+  @Query(() => [Board], { name: 'findBoardAll' })
+  findAll(
+    @Args('page', { type: () => Int }) page: number,
+    @Args('search', { type: () => String }) search: string,
+  ) {
+    return this.boardService.findAll(page, search);
   }
 
   @Query(() => Board, { name: 'board' })

@@ -19,7 +19,9 @@ const Wrapper = styled.div`
   > div {
     :nth-of-type(1),
     :nth-of-type(2) {
-      margin-bottom: var(--md-space);
+      > div {
+        margin-bottom: var(--md-space);
+      }
 
       > span {
         position: relative;
@@ -42,6 +44,9 @@ const ToastEditor = dynamic(() => import('@components/ToastEditor'), {
 const Write = () => {
   const editorRef = useRef();
   const subject = useInput('');
+  const breeds = useInput('');
+  const age = useInput('');
+  const price = useInput('');
   const [write, { error }] = useMutation(CREATE_BOARD);
   const router = useRouter();
 
@@ -51,12 +56,20 @@ const Write = () => {
     const editor = Array.from(document.querySelectorAll('.ProseMirror')).pop();
     const somnail = editor?.querySelector('img')?.src || '';
 
+    if (!somnail) {
+      toast('이미지를 한 장 이상 업로드 해주세요.');
+      return;
+    }
+
     const response = await write({
       variables: {
         input: {
           subject: subject.value,
           content: editor?.innerHTML,
           somnail,
+          breeds: breeds.value,
+          age: Number(age.value),
+          price: Number(price.value),
         },
       },
     });
@@ -78,6 +91,9 @@ const Write = () => {
     <Wrapper>
       <div>
         <TextField {...subject} placeholder="글제목" />
+        <TextField {...breeds} placeholder="반려동물 품종" />
+        <TextField {...age} type="number" placeholder="반려동물 나이" />
+        <TextField {...price} type="number" placeholder="가격" />
       </div>
       <ToastEditor
         ref={editorRef}

@@ -33,8 +33,17 @@ export class BoardService {
     return response.identifiers.pop();
   }
 
-  findAll() {
-    return 'This action returns all board';
+  async findAll(page, search) {
+    const splitPage = 40;
+    const pageNumber = Math.ceil(page / splitPage);
+    const response = await this.boardRepository
+      .createQueryBuilder('board')
+      .where('board.id > :min', { min: pageNumber })
+      .andWhere('board.id < :max', { max: pageNumber + splitPage })
+      .andWhere('board.subject like :search', { search: `%${search}%` })
+      .getMany();
+
+    return response;
   }
 
   findOne(id: number) {

@@ -3,11 +3,20 @@
 # ------------------------------------------------------
 
 type Board {
+  """나이"""
+  age: Int!
+
+  """품종"""
+  breeds: String!
+
   """글 내용"""
   content: String!
 
   """게시글 고유 번호"""
   id: Int!
+
+  """가격"""
+  price: Int!
 
   """작성일"""
   registerDate: DateTime!
@@ -26,8 +35,17 @@ type Board {
 }
 
 input CreateBoardInput {
+  """반려동물 나이"""
+  age: Int!
+
+  """반려동물 품종"""
+  breeds: String!
+
   """글제목"""
   content: String!
+
+  """판매가격"""
+  price: Int!
 
   """썸네일 이미지"""
   somnail: String!
@@ -76,14 +94,24 @@ type Mutation {
 
 type Query {
   board(id: Int!): Board!
+  findBoardAll(page: Int!, search: String!): [Board!]!
   findUserAll: [User!]!
   getToken: User!
 }
 
 input UpdateBoardInput {
+  """반려동물 나이"""
+  age: Int
+
+  """반려동물 품종"""
+  breeds: String
+
   """글제목"""
   content: String
   id: Int!
+
+  """판매가격"""
+  price: Int
 
   """썸네일 이미지"""
   somnail: String

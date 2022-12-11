@@ -26,14 +26,26 @@ export class Board {
   subject: string;
 
   @Field(() => String, { description: '글 내용' })
-  @Column({ type: 'text' })
+  @Column({ type: 'longtext' })
   content: string;
+
+  @Field(() => String, { description: '품종' })
+  @Column({ length: 50 })
+  breeds: string;
+
+  @Field(() => Int, { description: '나이' })
+  @Column()
+  age: number;
+
+  @Field(() => Int, { description: '가격' })
+  @Column()
+  price: number;
 
   @Field(() => Date, { description: '작성일' })
   @CreateDateColumn()
   registerDate: Date;
 
   @Field(() => String, { description: '게시글 썸네일 이미지' })
-  @Column({ type: 'text' })
+  @Column({ type: 'longtext' })
   somnail: string;
 }
